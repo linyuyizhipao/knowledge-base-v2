@@ -14,22 +14,14 @@ links:
 ## Service 模板
 
 ```go
+package <module>
+
 var <Module>Srv = &service{}
 
+type service struct{}
+
 func (s *service) Action(ctx context.Context, req *query.Req<Action>) *pb.Res<Action> {
-    // 1. 参数验证
-    if req.UID <= 0 {
-        return &pb.Res<Action>{Success: false, Msg: "invalid uid"}
-    }
-    
-    // 2. 缓存查询
-    rds := library.RedisClient(library.RedisPassive)
-    cached, _ := rds.Get(ctx, cacheKey).Bytes()
-    
-    // 3. 数据库查询
-    entity, _ := dao.<Module>.Ctx(ctx).One(req.UID)
-    
-    return &pb.Res<Action>{Success: true, Data: entity}
+    // 1. 参数验证  2. 缓存查询  3. 数据库查询  4. 返回
 }
 ```
 
@@ -39,7 +31,6 @@ func (s *service) Action(ctx context.Context, req *query.Req<Action>) *pb.Res<Ac
 func (s *service) Transfer(ctx context.Context, from, to int) error {
     tx, _ := dao.Ctx(ctx).DB().Begin()
     defer tx.Rollback()
-    
     dao.User.Ctx(ctx).DB(tx).Update(...)
     return tx.Commit()
 }
@@ -47,16 +38,4 @@ func (s *service) Transfer(ctx context.Context, from, to int) error {
 
 ## 中间件
 
-| 中间件 | 用途 |
-|--------|------|
-| CORS | 跨域处理 |
-| Fire | 速率限制 |
-| Ctx | 上下文注入 |
-| Auth | 身份认证 |
-| Error | 错误处理 |
-| Trace | 链路追踪 |
-
-## 相关知识
-
-- [[projects/slp-go/01-structure]]
-- [[patterns/business-module-standard]]
+CORS（跨域） | Fire（速率限制） | Ctx（上下文注入） | Auth（身份认证） | Error（错误处理） | Trace（链路追踪）

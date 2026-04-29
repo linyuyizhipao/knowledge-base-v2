@@ -2,12 +2,8 @@
 id: slp-go-development
 label: slp-go 开发工作流
 source: curated/projects/slp-go/03-development.md
-project: slp-go
-compiled: 2026-04-25
-links:
-  - slp-go-api
-  - slp-go-service
-  - slp-go-dao
+compiled: 2026-04-29
+links: [slp-go-api, slp-go-service, slp-go-dao]
 ---
 
 # slp-go 开发工作流
@@ -20,34 +16,18 @@ links:
 | `slpctl gen -t xs_user_profile,xs_follow` | 批量生成 |
 | `slpctl gen -t xs_user_profile -delete` | 删除模式 |
 
-## 构建命令
+## 构建与运行
 
 | 命令 | 用途 |
 |------|------|
-| `make` | 构建所有服务 |
-| `make http` | 仅 HTTP 服务 |
-| `make rpc` | 仅 RPC 服务 |
-| `make cmd` | 仅 CMD 工具 |
+| `make` / `make http` / `make rpc` / `make cmd` | 构建指定服务 |
+| `./bin/http` / `./bin/rpc --name=user` / `./bin/cmd --name=cache --action=Main` | 本地运行 |
 
-## 本地运行
-
-| 命令 | 用途 |
-|------|------|
-| `./bin/http` | HTTP 服务 |
-| `./bin/rpc --name=user` | RPC 服务 |
-| `./bin/cmd --name=cache --action=Main` | CMD 任务 |
-
-## 代码检查
+## 检查与测试
 
 | 命令 | 用途 |
 |------|------|
 | `golangci-lint run ./...` | 静态检查 |
-| `gofmt -l -s -w app/` | 代码格式化 |
-
-## 测试
-
-| 命令 | 用途 |
-|------|------|
 | `go test -v -count=1 ./...` | 所有测试 |
 | `go test -v ./app/service/... -run TestXxx` | 特定测试 |
 

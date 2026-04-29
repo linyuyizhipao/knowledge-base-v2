@@ -1,3 +1,6 @@
+# nodes.jsonl - 节点索引
+# 更新: 2026-04-29T10:46:43.125115
+#
 {"id": "AGENTS", "label": "AI统一入口", "path": "curated/AGENTS.md", "category": "core", "role": "入口", "desc": "所有AI工具必读，包含检查点、禁令、文档结构", "sources": [], "created": "2026-04-28T23:44:13.502094"}
 {"id": "CODING_STANDARDS", "label": "核心禁令", "path": "curated/CODING_STANDARDS.md", "category": "core", "role": "禁令", "desc": "编码禁止事项：禁止手动写API、禁止循环IO、禁止阻塞", "sources": [], "created": "2026-04-28T23:44:13.502105"}
 {"id": "AI_WORKFLOW", "label": "5阶段开发流程", "path": "curated/AI_WORKFLOW.md", "category": "core", "role": "流程", "desc": "需求→检索→设计→开发→沉淀", "sources": [], "created": "2026-04-28T23:44:13.502118"}
@@ -50,4 +53,4 @@
 {"id": "cross-projects/buye-payment/overview", "label": "不夜支付概览", "path": "curated/cross-projects/buye-payment/overview.md", "category": "cross-project", "role": "概览", "desc": "支付系统", "sources": [], "created": "2026-04-28T23:44:13.502528"}
 {"id": "cross-projects/gift-suit/gift-suit-feature", "label": "礼包套装功能", "path": "curated/cross-projects/gift-suit/gift-suit-feature.md", "category": "cross-project", "role": "功能", "desc": "礼包套装功能", "sources": [], "created": "2026-04-28T23:44:13.502533"}
 {"id": "cross-projects/decorate-commodity-use/overview", "label": "装扮物品概览", "path": "curated/cross-projects/decorate-commodity-use/overview.md", "category": "cross-project", "role": "概览", "desc": "装扮使用功能", "sources": [], "created": "2026-04-28T23:44:13.502538"}
-{"id": "patterns/cache-usage-guide", "label": "缓存使用规范", "path": "wiki/patterns/cache-usage-guide.md", "category": "pattern", "role": "缓存", "desc": "Redis缓存标准使用模式", "sources": ["curated/patterns/cache-usage-guide.md"], "tags": ["缓存", "Redis"], "created": "2026-04-29T16:45:00"}
+{"id": "patterns/cache-usage-guide", "path": "wiki/patterns/cache-usage-guide.md", "source": "curated/patterns/cache-usage-guide.md", "source_hash": "692de2181e7bb56f3f17a7d1c06446a151b327912070a4af51de9fd9ba0e78ee", "compiled": "2026-04-29T10:46:43.124788", "status": "pending_llm"}
