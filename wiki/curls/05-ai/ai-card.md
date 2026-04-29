@@ -1,7 +1,7 @@
 ---
 id: curl/05-ai_ai-card
 label: AI 人物 - ai-card
-source: raw/curls/
+source: curated/curls/
 role: curl
 compiled: 2026-04-28
 tags: [curl, AI 人物]

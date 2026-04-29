@@ -1,7 +1,7 @@
 ---
 id: curl/10-activity_audit-external
 label: 活动与支付 - audit-external
-source: raw/curls/
+source: curated/curls/
 role: curl
 compiled: 2026-04-28
 tags: [curl, 活动与支付]

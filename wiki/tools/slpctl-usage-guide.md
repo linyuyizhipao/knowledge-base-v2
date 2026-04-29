@@ -1,7 +1,7 @@
 ---
 id: tools/slpctl-usage-guide
 label: slpctl-usage-guide
-source: /Users/hugh/project/my-wiki/curated/tools/slpctl-usage-guide.md
+source: curated/tools/slpctl-usage-guide.md
 role: 工具
 compiled: 2026-04-28
 source_hash: e18e995d5979ba587acf204c312d10ac

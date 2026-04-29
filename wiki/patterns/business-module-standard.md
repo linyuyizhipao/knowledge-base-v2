@@ -1,7 +1,7 @@
 ---
 id: patterns/business-module-standard
 label: business-module-standard
-source: /Users/hugh/project/my-wiki/curated/patterns/business-module-standard.md
+source: curated/patterns/business-module-standard.md
 role: 规范
 compiled: 2026-04-28
 source_hash: 12e7c3e3c9dea0839990f4cd322e6d4f

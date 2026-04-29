@@ -1,7 +1,7 @@
 ---
 id: patterns/business-code-example
 label: business-code-example
-source: /Users/hugh/project/my-wiki/curated/patterns/business-code-example.md
+source: curated/patterns/business-code-example.md
 role: 规范
 compiled: 2026-04-28
 source_hash: 64838328138230636a8c6c15a4a510c3

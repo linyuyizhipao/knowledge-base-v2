@@ -1,7 +1,7 @@
 ---
 id: patterns/database-naming-conventions
 label: database-naming-conventions
-source: /Users/hugh/project/my-wiki/curated/patterns/database-naming-conventions.md
+source: curated/patterns/database-naming-conventions.md
 role: 规范
 compiled: 2026-04-28
 source_hash: b3b9236cc5379d9b4b243b2fb73a2a17

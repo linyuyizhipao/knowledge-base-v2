@@ -1,7 +1,7 @@
 ---
 id: curl/01-user_title-noble
 label: 用户相关 - title-noble
-source: raw/curls/
+source: curated/curls/
 role: curl
 compiled: 2026-04-28
 tags: [curl, 用户相关]

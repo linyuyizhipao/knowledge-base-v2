@@ -1,7 +1,7 @@
 ---
 id: patterns/nsq-usage
 label: nsq-usage
-source: /Users/hugh/project/my-wiki/curated/patterns/nsq-usage.md
+source: curated/patterns/nsq-usage.md
 role: 规范
 compiled: 2026-04-28
 source_hash: fe56ae6ea0c341ae3d405e83ff77713c

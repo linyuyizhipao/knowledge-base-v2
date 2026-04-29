@@ -1,7 +1,7 @@
 ---
 id: tools/gh-pr-analysis
 label: gh-pr-analysis
-source: /Users/hugh/project/my-wiki/curated/tools/gh-pr-analysis.md
+source: curated/tools/gh-pr-analysis.md
 role: 工具
 compiled: 2026-04-28
 source_hash: 4e78ed4952c1244b18a60d999d6a2ca5

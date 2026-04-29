@@ -1,7 +1,7 @@
 ---
 id: patterns/architecture-layered-standard
 label: architecture-layered-standard
-source: /Users/hugh/project/my-wiki/curated/patterns/architecture-layered-standard.md
+source: curated/patterns/architecture-layered-standard.md
 role: 规范
 compiled: 2026-04-28
 source_hash: 1a13ee05d580c0470ce33610e94a3abe

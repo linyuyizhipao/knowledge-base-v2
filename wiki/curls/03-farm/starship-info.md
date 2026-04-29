@@ -1,7 +1,7 @@
 ---
 id: curl/03-farm_starship-info
 label: 农场/星舰 - starship-info
-source: raw/curls/
+source: curated/curls/
 role: curl
 compiled: 2026-04-28
 tags: [curl, 农场/星舰]

@@ -1,7 +1,7 @@
 ---
 id: curl/06-backend_audit-ops
 label: 后台管理 - audit-ops
-source: raw/curls/
+source: curated/curls/
 role: curl
 compiled: 2026-04-28
 tags: [curl, 后台管理]

@@ -1,7 +1,7 @@
 ---
 id: curl/08-data-query_sql-select
 label: 数据查询 - sql-select
-source: raw/curls/
+source: curated/curls/
 role: curl
 compiled: 2026-04-28
 tags: [curl, 数据查询]

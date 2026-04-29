@@ -1,7 +1,7 @@
 ---
 id: curl/02-room_room-hot-tag
 label: 房间相关 - room-hot-tag
-source: raw/curls/
+source: curated/curls/
 role: curl
 compiled: 2026-04-28
 tags: [curl, 房间相关]

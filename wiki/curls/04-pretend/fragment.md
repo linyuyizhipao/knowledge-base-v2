@@ -1,7 +1,7 @@
 ---
 id: curl/04-pretend_fragment
 label: 装扮系统 - fragment
-source: raw/curls/
+source: curated/curls/
 role: curl
 compiled: 2026-04-28
 tags: [curl, 装扮系统]

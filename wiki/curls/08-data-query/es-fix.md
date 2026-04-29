@@ -1,7 +1,7 @@
 ---
 id: curl/08-data-query_es-fix
 label: 数据查询 - ES 与数据修复
-source: raw/curls/08-data-query/es-fix.md
+source: curated/curls/08-data-query/es-fix.md
 role: curl
 compiled: 2026-04-28
 tags: [curl, 数据查询, ES 与数据修复]

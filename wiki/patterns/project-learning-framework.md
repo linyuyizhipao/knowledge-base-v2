@@ -1,7 +1,7 @@
 ---
 id: patterns/project-learning-framework
 label: project-learning-framework
-source: /Users/hugh/project/my-wiki/curated/patterns/project-learning-framework.md
+source: curated/patterns/project-learning-framework.md
 role: 规范
 compiled: 2026-04-28
 source_hash: b35ab3a6cd70bcbbf60832b788b2ba2f

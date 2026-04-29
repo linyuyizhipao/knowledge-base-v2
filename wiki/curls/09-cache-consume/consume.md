@@ -1,7 +1,7 @@
 ---
 id: curl/09-cache-consume_consume
 label: 缓存与消费 - consume
-source: raw/curls/
+source: curated/curls/
 role: curl
 compiled: 2026-04-28
 tags: [curl, 缓存与消费]

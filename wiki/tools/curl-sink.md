@@ -1,7 +1,7 @@
 ---
 id: tools/curl-sink
 label: curl-sink
-source: /Users/hugh/project/my-wiki/curated/tools/curl-sink.md
+source: curated/tools/curl-sink.md
 role: 工具
 compiled: 2026-04-28
 source_hash: 6c87f9971879a0434304bd70fc7365bd

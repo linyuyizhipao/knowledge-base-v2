@@ -1,7 +1,7 @@
 ---
 id: patterns/dev-to-dev-deployment
 label: dev-to-dev-deployment
-source: /Users/hugh/project/my-wiki/curated/patterns/dev-to-dev-deployment.md
+source: curated/patterns/dev-to-dev-deployment.md
 role: 规范
 compiled: 2026-04-28
 source_hash: 08b586360df5a075092149f3246f5cc1

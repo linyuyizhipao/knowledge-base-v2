@@ -1,7 +1,7 @@
 ---
 id: patterns/sub-agent-orchestration
 label: sub-agent-orchestration
-source: /Users/hugh/project/my-wiki/curated/patterns/sub-agent-orchestration.md
+source: curated/patterns/sub-agent-orchestration.md
 role: 规范
 compiled: 2026-04-28
 source_hash: a2d14a9d4638ed04f6784b0c55b8fead

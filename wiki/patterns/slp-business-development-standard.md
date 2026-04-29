@@ -1,7 +1,7 @@
 ---
 id: patterns/slp-business-development-standard
 label: slp-business-development-standard
-source: /Users/hugh/project/my-wiki/curated/patterns/slp-business-development-standard.md
+source: curated/patterns/slp-business-development-standard.md
 role: 规范
 compiled: 2026-04-28
 source_hash: 8a29df3b8d009ac263747b7916054f57

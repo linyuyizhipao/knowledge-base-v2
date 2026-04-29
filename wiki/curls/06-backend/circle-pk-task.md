@@ -1,7 +1,7 @@
 ---
 id: curl/06-backend_circle-pk-task
 label: 后台管理 - circle-pk-task
-source: raw/curls/
+source: curated/curls/
 role: curl
 compiled: 2026-04-28
 tags: [curl, 后台管理]

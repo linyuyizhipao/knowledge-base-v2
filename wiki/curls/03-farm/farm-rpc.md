@@ -1,7 +1,7 @@
 ---
 id: curl/03-farm_farm-rpc
 label: 农场/星舰 - farm-rpc
-source: raw/curls/
+source: curated/curls/
 role: curl
 compiled: 2026-04-28
 tags: [curl, 农场/星舰]

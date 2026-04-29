@@ -1,7 +1,7 @@
 ---
 id: tools/slpctl
 label: slpctl
-source: /Users/hugh/project/my-wiki/curated/tools/slpctl.md
+source: curated/tools/slpctl.md
 role: 工具
 compiled: 2026-04-28
 source_hash: 22e54e42d0fced27b30e0d25f318b6e7

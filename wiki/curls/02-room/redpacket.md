@@ -1,7 +1,7 @@
 ---
 id: curl/02-room_redpacket
 label: 房间相关 - redpacket
-source: raw/curls/
+source: curated/curls/
 role: curl
 compiled: 2026-04-28
 tags: [curl, 房间相关]

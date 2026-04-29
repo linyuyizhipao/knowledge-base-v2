@@ -1,7 +1,7 @@
 ---
 id: patterns/README
 label: README
-source: /Users/hugh/project/my-wiki/curated/patterns/README.md
+source: curated/patterns/README.md
 role: 规范
 compiled: 2026-04-28
 source_hash: d8fb9a625883f9c865dcdb0334cfa298

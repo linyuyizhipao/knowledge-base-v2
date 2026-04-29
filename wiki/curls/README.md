@@ -1,7 +1,7 @@
 ---
 id: curl_README
 label: Curl 命令库总览
-source: raw/curls/README.md
+source: curated/curls/README.md
 role: curl
 compiled: 2026-04-28
 tags: [curl, 索引]

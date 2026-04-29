@@ -1,7 +1,7 @@
 ---
 id: AGENTS
 label: AI入口
-source: /Users/hugh/project/my-wiki/curated/AGENTS.md
+source: curated/AGENTS.md
 role: 入口
 compiled: 2026-04-28
 source_hash: d9f76f16e1cb6a4c38e737e7653e1da0

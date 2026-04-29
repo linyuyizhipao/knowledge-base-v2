@@ -1,7 +1,7 @@
 ---
 id: curl/07-test_slp-test
 label: 测试端点 - slp-test
-source: raw/curls/
+source: curated/curls/
 role: curl
 compiled: 2026-04-28
 tags: [curl, 测试端点]

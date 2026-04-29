@@ -1,7 +1,7 @@
 ---
 id: curl/04-pretend_send-drop
 label: 装扮系统 - send-drop
-source: raw/curls/
+source: curated/curls/
 role: curl
 compiled: 2026-04-28
 tags: [curl, 装扮系统]

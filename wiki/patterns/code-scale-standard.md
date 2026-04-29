@@ -1,7 +1,7 @@
 ---
 id: patterns/code-scale-standard
 label: code-scale-standard
-source: /Users/hugh/project/my-wiki/curated/patterns/code-scale-standard.md
+source: curated/patterns/code-scale-standard.md
 role: 规范
 compiled: 2026-04-28
 source_hash: e22988e77ae89c0efb9fcd0e469cb691

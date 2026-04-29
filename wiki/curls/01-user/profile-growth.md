@@ -1,7 +1,7 @@
 ---
 id: curl/01-user_profile-growth
 label: 用户相关 - profile-growth
-source: raw/curls/
+source: curated/curls/
 role: curl
 compiled: 2026-04-28
 tags: [curl, 用户相关]

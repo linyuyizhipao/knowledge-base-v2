@@ -1,7 +1,7 @@
 ---
 id: curl/03-farm_farm-commodity
 label: 农场/星舰 - farm-commodity
-source: raw/curls/03-farm/farm-commodity.md
+source: curated/curls/03-farm/farm-commodity.md
 role: curl
 compiled: 2026-04-28
 tags: [curl, 农场/星舰, farm-commodity]

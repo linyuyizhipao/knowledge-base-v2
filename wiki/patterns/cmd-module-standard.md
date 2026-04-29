@@ -1,7 +1,7 @@
 ---
 id: patterns/cmd-module-standard
 label: cmd-module-standard
-source: /Users/hugh/project/my-wiki/curated/patterns/cmd-module-standard.md
+source: curated/patterns/cmd-module-standard.md
 role: 规范
 compiled: 2026-04-28
 source_hash: 4153ff12fc7004eb479dc148a5eff9b7

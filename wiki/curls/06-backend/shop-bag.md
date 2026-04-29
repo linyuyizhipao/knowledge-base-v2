@@ -1,7 +1,7 @@
 ---
 id: curl/06-backend_shop-bag
 label: 后台管理 - shop-bag
-source: raw/curls/
+source: curated/curls/
 role: curl
 compiled: 2026-04-28
 tags: [curl, 后台管理]
