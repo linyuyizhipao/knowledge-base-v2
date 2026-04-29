@@ -1,0 +1,652 @@
+{
+  "name": "SLP 知识库",
+  "version": "3.0",
+  "updated": "2026-04-28T18:30",
+  "compiled_note": "所有文件编译到 wiki/ 下，AI 通过 nodes_index 查找 wiki/ 路径",
+  "shortcuts": {
+    "核心禁令": "wiki/core/coding-standards.md",
+    "开发流程": "wiki/patterns/slp-business-development-standard.md",
+    "事件开发": "wiki/patterns/event-extension-guide.md",
+    "slpctl": "wiki/tools/slpctl-usage-guide.md",
+    "slp-go结构": "wiki/projects/slp-go/01-structure.md",
+    "slp-room结构": "wiki/projects/slp-room/01-structure.md",
+    "slp-starship结构": "wiki/projects/slp-starship/01-structure.md",
+    "农场隔离": "wiki/projects/slp-starship-farm-appid-isolation.md",
+    "slp-common-rpc": "wiki/projects/slp-common-rpc/CORE_LEARNING.md",
+    "369业务": "wiki/cross-projects/369-recharge-overview.md",
+    "口令功能": "wiki/cross-projects/passcode-readme.md",
+    "萌新广场隔离": "wiki/projects/slp-go/10-katouch-appid-isolation.md",
+    "curl总览": "wiki/curls/README.md",
+    "curl用户档案": "wiki/curls/01-user/profile-growth.md",
+    "curl房间热度": "wiki/curls/02-room/room-hot-tag.md",
+    "curl口令": "wiki/curls/02-room/passcode.md",
+    "curl宠物": "wiki/curls/02-room/pet.md",
+    "curl农场RPC": "wiki/curls/03-farm/farm-rpc.md",
+    "curl装扮": "wiki/curls/04-pretend/send-drop.md",
+    "curlAI卡片": "wiki/curls/05-ai/ai-card.md",
+    "curl后台": "wiki/curls/06-backend/user-ops.md",
+    "curl测试": "wiki/curls/07-test/slp-test.md",
+    "curl缓存": "wiki/curls/09-cache-consume/cache-ops.md",
+    "curl充值": "wiki/curls/10-activity/pay.md",
+    "curl沉淀": "wiki/tools/curl-sink.md"
+  },
+  "core_rules": {
+    "禁止手动写API": {
+      "wrong": "手写 handler/service/dao",
+      "correct": "slpctl code -api /go/slp/module/api -desc '描述'",
+      "reason": "工具自动生成骨架，你只填充业务逻辑"
+    },
+    "禁止手动编辑DAO/Model": {
+      "wrong": "手动修改 app/dao/internal/*.go、app/pb/entity_*.pb.go、proto/entity_*.proto",
+      "correct": "slpctl gen -t <表名> 重新生成",
+      "reason": "DAO/Model 由工具从数据库表自动生成，手动编辑会被下次生成覆盖"
+    },
+    "禁止循环IO": {
+      "wrong": "for { dao.Find(id) }",
+      "correct": "批量查询 + map组装",
+      "reason": "避免N+1查询，性能问题"
+    },
+    "禁止阻塞主goroutine": {
+      "wrong": "同步处理耗时操作（>100ms）",
+      "correct": "异步任务队列 / NSQ",
+      "reason": "主goroutine阻塞会导致请求堆积"
+    },
+    "禁止绕过事件总线": {
+      "wrong": "直接调用其他模块",
+      "correct": "发布事件解耦",
+      "reason": "模块间通信必须通过事件总线"
+    },
+    "禁止函数过大": {
+      "wrong": "Handler > 30行, Service > 100行",
+      "correct": "按功能拆分",
+      "reason": "大函数难以维护和测试"
+    }
+  },
+  "project_routes": {
+    "slp-go": "/go/slp/",
+    "slp-room": "/go/room/",
+    "slp-starship": "/go/starship/"
+  },
+  "ai_guide": {
+    "dev_task": {
+      "must_read": [
+        "AGENTS",
+        "CODING_STANDARDS",
+        "patterns/slp-business-development-standard",
+        "tools/slpctl-usage-guide"
+      ],
+      "by_task_type": {
+        "new_api": [
+          "tools/slpctl-usage-guide",
+          "projects/<project>/04-api"
+        ],
+        "new_event": [
+          "patterns/event-extension-guide",
+          "patterns/nsq-usage",
+          "projects/<project>/09-event-capabilities"
+        ],
+        "new_cmd": [
+          "patterns/cmd-module-standard"
+        ],
+        "cross_business": [
+          "cross-projects/<business>/overview",
+          "cross-projects/<business>/<project>"
+        ]
+      }
+    },
+    "doc_task": {
+      "must_read": [
+        "INDEX",
+        "DOCUMENT_LOCATION_RULES",
+        "AGENTS"
+      ],
+      "by_type": {
+        "project_knowledge": "knowledge/projects/<project>/",
+        "cross_project": "knowledge/cross-projects/<business>/",
+        "pattern": "knowledge/patterns/",
+        "tool": "knowledge/tools/"
+      }
+    }
+  },
+  "nodes_index": [
+    {
+      "id": "AGENTS",
+      "path": "wiki/core/agents.md",
+      "label": "AI统一入口",
+      "category": "core"
+    },
+    {
+      "id": "CODING_STANDARDS",
+      "path": "wiki/core/coding-standards.md",
+      "label": "核心禁令",
+      "category": "core"
+    },
+    {
+      "id": "AI_WORKFLOW",
+      "path": "wiki/core/ai-workflow.md",
+      "label": "5阶段开发流程",
+      "category": "core"
+    },
+    {
+      "id": "QUICK_REFERENCE",
+      "path": "wiki/core/quick-reference.md",
+      "label": "快速参考卡片",
+      "category": "core"
+    },
+    {
+      "id": "INDEX",
+      "path": "wiki/core/index.md",
+      "label": "文档索引",
+      "category": "core"
+    },
+    {
+      "id": "USER_GUIDE",
+      "path": "wiki/core/user-guide.md",
+      "label": "使用指南",
+      "category": "core"
+    },
+    {
+      "id": "README",
+      "path": "wiki/core/readme.md",
+      "label": "项目说明",
+      "category": "core"
+    },
+    {
+      "id": "DOCUMENT_LOCATION_RULES",
+      "path": "wiki/core/document-location-rules.md",
+      "label": "文档存放规则",
+      "category": "core"
+    },
+    {
+      "id": "patterns/slp-business-development-standard",
+      "path": "wiki/patterns/slp-business-development-standard.md",
+      "label": "业务开发规范",
+      "category": "pattern"
+    },
+    {
+      "id": "patterns/event-extension-guide",
+      "path": "wiki/patterns/event-extension-guide.md",
+      "label": "事件拓展指南",
+      "category": "pattern"
+    },
+    {
+      "id": "patterns/nsq-usage",
+      "path": "wiki/patterns/nsq-usage.md",
+      "label": "NSQ使用规范",
+      "category": "pattern"
+    },
+    {
+      "id": "patterns/cmd-module-standard",
+      "path": "wiki/patterns/cmd-module-standard.md",
+      "label": "CMD模块标准",
+      "category": "pattern"
+    },
+    {
+      "id": "patterns/code-scale-standard",
+      "path": "wiki/patterns/code-scale-standard.md",
+      "label": "代码规模标准",
+      "category": "pattern"
+    },
+    {
+      "id": "patterns/architecture-layered-standard",
+      "path": "wiki/patterns/architecture-layered-standard.md",
+      "label": "分层架构标准",
+      "category": "pattern"
+    },
+    {
+      "id": "patterns/business-module-standard",
+      "path": "wiki/patterns/business-module-standard.md",
+      "label": "业务模块标准",
+      "category": "pattern"
+    },
+    {
+      "id": "patterns/sub-agent-orchestration",
+      "path": "wiki/patterns/sub-agent-orchestration.md",
+      "label": "Sub-agent编排指南",
+      "category": "pattern"
+    },
+    {
+      "id": "patterns/business-code-example",
+      "path": "wiki/patterns/business-code-example.md",
+      "label": "业务代码示例",
+      "category": "pattern"
+    },
+    {
+      "id": "patterns/database-naming-conventions",
+      "path": "wiki/patterns/database-naming-conventions.md",
+      "label": "数据库命名",
+      "category": "pattern"
+    },
+    {
+      "id": "patterns/dev-to-dev-deployment",
+      "path": "wiki/patterns/dev-to-dev-deployment.md",
+      "label": "部署流程",
+      "category": "pattern"
+    },
+    {
+      "id": "patterns/project-learning-framework",
+      "path": "wiki/patterns/project-learning-framework.md",
+      "label": "项目学习框架",
+      "category": "pattern"
+    },
+    {
+      "id": "tools/slpctl",
+      "path": "wiki/tools/slpctl.md",
+      "label": "slpctl命令参考",
+      "category": "tool"
+    },
+    {
+      "id": "tools/slpctl-usage-guide",
+      "path": "wiki/tools/slpctl-usage-guide.md",
+      "label": "slpctl使用指南",
+      "category": "tool"
+    },
+    {
+      "id": "tools/gh-pr-analysis",
+      "path": "wiki/tools/gh-pr-analysis.md",
+      "label": "gh PR分析",
+      "category": "tool"
+    },
+    {
+      "id": "tools/curl-sink",
+      "path": "wiki/tools/curl-sink.md",
+      "label": "Curl 沉淀工作流",
+      "category": "tool"
+    },
+    {
+      "id": "projects/slp-go/01-structure",
+      "path": "wiki/projects/slp-go/01-structure.md",
+      "label": "slp-go项目结构",
+      "category": "project"
+    },
+    {
+      "id": "projects/slp-go/02-architecture",
+      "path": "wiki/projects/slp-go/02-architecture.md",
+      "label": "slp-go架构",
+      "category": "project"
+    },
+    {
+      "id": "projects/slp-go/03-development",
+      "path": "wiki/projects/slp-go/03-development.md",
+      "label": "slp-go开发流程",
+      "category": "project"
+    },
+    {
+      "id": "projects/slp-go/04-api",
+      "path": "wiki/projects/slp-go/04-api.md",
+      "label": "slp-go API模式",
+      "category": "project"
+    },
+    {
+      "id": "projects/slp-go/05-service",
+      "path": "wiki/projects/slp-go/05-service.md",
+      "label": "slp-go Service模式",
+      "category": "project"
+    },
+    {
+      "id": "projects/slp-go/06-dao",
+      "path": "wiki/projects/slp-go/06-dao.md",
+      "label": "slp-go DAO模式",
+      "category": "project"
+    },
+    {
+      "id": "projects/slp-go/07-infra",
+      "path": "wiki/projects/slp-go/07-infra.md",
+      "label": "slp-go基础设施",
+      "category": "project"
+    },
+    {
+      "id": "projects/slp-go/08-business-369-recharge",
+      "path": "wiki/projects/slp-go/08-business-369-recharge.md",
+      "label": "slp-go 369业务案例",
+      "category": "project"
+    },
+    {
+      "id": "projects/slp-go/09-event-capabilities",
+      "path": "wiki/projects/slp-go/09-event-capabilities.md",
+      "label": "slp-go事件能力",
+      "category": "project"
+    },
+    {
+      "id": "projects/slp-go/10-katouch-appid-isolation",
+      "path": "wiki/projects/slp-go/10-katouch-appid-isolation.md",
+      "label": "萌新广场app_id隔离改造",
+      "category": "project"
+    },
+    {
+      "id": "projects/slp-room/01-structure",
+      "path": "wiki/projects/slp-room/01-structure.md",
+      "label": "slp-room项目结构",
+      "category": "project"
+    },
+    {
+      "id": "projects/slp-room/02-architecture",
+      "path": "wiki/projects/slp-room/02-architecture.md",
+      "label": "slp-room架构",
+      "category": "project"
+    },
+    {
+      "id": "projects/slp-room/01-event-capabilities",
+      "path": "wiki/projects/slp-room/01-event-capabilities.md",
+      "label": "slp-room事件能力",
+      "category": "project"
+    },
+    {
+      "id": "projects/slp-starship/01-structure",
+      "path": "wiki/projects/slp-starship/01-structure.md",
+      "label": "slp-starship项目结构",
+      "category": "project"
+    },
+    {
+      "id": "projects/slp-starship/01-event-capabilities",
+      "path": "wiki/projects/slp-starship/01-event-capabilities.md",
+      "label": "slp-starship事件能力",
+      "category": "project"
+    },
+    {
+      "id": "projects/slp-starship/02-farm-appid-isolation",
+      "path": "wiki/projects/slp-starship-farm-appid-isolation.md",
+      "label": "农场多应用数据隔离",
+      "category": "project"
+    },
+    {
+      "id": "projects/slp-common-rpc/CORE_LEARNING",
+      "path": "wiki/projects/slp-common-rpc/CORE_LEARNING.md",
+      "label": "slp-common-rpc学习",
+      "category": "project"
+    },
+    {
+      "id": "cross-projects/369-recharge/overview",
+      "path": "wiki/cross-projects/369-recharge-overview.md",
+      "label": "369观光团概览",
+      "category": "cross-project"
+    },
+    {
+      "id": "cross-projects/369-recharge/slp-room",
+      "path": "wiki/cross-projects/369-recharge-slp-room.md",
+      "label": "369 slp-room实现",
+      "category": "cross-project"
+    },
+    {
+      "id": "cross-projects/big-brother/README-PASSCODE",
+      "path": "wiki/cross-projects/passcode-readme.md",
+      "label": "口令功能入口",
+      "category": "cross-project"
+    },
+    {
+      "id": "cross-projects/big-brother/passcode-requirement",
+      "path": "wiki/cross-projects/passcode-requirement.md",
+      "label": "口令需求",
+      "category": "cross-project"
+    },
+    {
+      "id": "cross-projects/big-brother/passcode-technical-design",
+      "path": "wiki/cross-projects/passcode-technical-design.md",
+      "label": "口令技术设计",
+      "category": "cross-project"
+    },
+    {
+      "id": "cross-projects/big-brother/test-report",
+      "path": "wiki/cross-projects/passcode-test-report.md",
+      "label": "口令测试报告",
+      "category": "cross-project"
+    },
+    {
+      "id": "cross-projects/big-brother/pet-feature",
+      "path": "wiki/cross-projects/big-brother-pet-feature.md",
+      "label": "宠物功能",
+      "category": "cross-project"
+    },
+    {
+      "id": "cross-projects/prayer-activity/01-overview",
+      "path": "wiki/cross-projects/prayer-activity-overview.md",
+      "label": "祈福活动概览",
+      "category": "cross-project"
+    },
+    {
+      "id": "cross-projects/prayer-activity/slp-starship",
+      "path": "wiki/cross-projects/prayer-activity-slp-starship.md",
+      "label": "祈福 slp-starship实现",
+      "category": "cross-project"
+    },
+    {
+      "id": "cross-projects/fly-chess/overview",
+      "path": "wiki/cross-projects/fly-chess-overview.md",
+      "label": "飞行棋概览",
+      "category": "cross-project"
+    },
+    {
+      "id": "cross-projects/chatroom/room-type-development",
+      "path": "wiki/cross-projects/room-type-development.md",
+      "label": "房型开发",
+      "category": "cross-project"
+    },
+    {
+      "id": "cross-projects/chatroom/room-type-concept",
+      "path": "wiki/cross-projects/room-type-concept.md",
+      "label": "房型概念",
+      "category": "cross-project"
+    },
+    {
+      "id": "cross-projects/buye-payment/overview",
+      "path": "wiki/cross-projects/buye-payment-overview.md",
+      "label": "不夜支付概览",
+      "category": "cross-project"
+    },
+    {
+      "id": "cross-projects/gift-suit/gift-suit-feature",
+      "path": "wiki/cross-projects/gift-suit-feature.md",
+      "label": "礼包套装功能",
+      "category": "cross-project"
+    },
+    {
+      "id": "cross-projects/decorate-commodity-use/overview",
+      "path": "wiki/cross-projects/decorate-commodity-use-overview.md",
+      "label": "装扮物品概览",
+      "category": "cross-project"
+    },
+    {
+      "id": "curl_README",
+      "path": "wiki/curls/README.md",
+      "label": "Curl 命令库总览",
+      "category": "curl",
+      "curl_count": 0
+    },
+    {
+      "id": "curl/01-user_profile-growth",
+      "path": "wiki/curls/01-user/profile-growth.md",
+      "label": "用户相关 - profile-growth",
+      "category": "curl",
+      "curl_count": 10
+    },
+    {
+      "id": "curl/01-user_relation-badges",
+      "path": "wiki/curls/01-user/relation-badges.md",
+      "label": "用户相关 - relation-badges",
+      "category": "curl",
+      "curl_count": 2
+    },
+    {
+      "id": "curl/01-user_title-noble",
+      "path": "wiki/curls/01-user/title-noble.md",
+      "label": "用户相关 - title-noble",
+      "category": "curl",
+      "curl_count": 2
+    },
+    {
+      "id": "curl/02-room_passcode",
+      "path": "wiki/curls/02-room/passcode.md",
+      "label": "房间相关 - passcode",
+      "category": "curl",
+      "curl_count": 7
+    },
+    {
+      "id": "curl/02-room_pet",
+      "path": "wiki/curls/02-room/pet.md",
+      "label": "房间相关 - pet",
+      "category": "curl",
+      "curl_count": 3
+    },
+    {
+      "id": "curl/02-room_redpacket",
+      "path": "wiki/curls/02-room/redpacket.md",
+      "label": "房间相关 - redpacket",
+      "category": "curl",
+      "curl_count": 4
+    },
+    {
+      "id": "curl/02-room_room-hot-tag",
+      "path": "wiki/curls/02-room/room-hot-tag.md",
+      "label": "房间相关 - room-hot-tag",
+      "category": "curl",
+      "curl_count": 10
+    },
+    {
+      "id": "curl/03-farm_farm-commodity",
+      "path": "wiki/curls/03-farm/farm-commodity.md",
+      "label": "农场/星舰 - farm-commodity",
+      "category": "curl",
+      "curl_count": 2
+    },
+    {
+      "id": "curl/03-farm_farm-http",
+      "path": "wiki/curls/03-farm/farm-http.md",
+      "label": "农场/星舰 - farm-http",
+      "category": "curl",
+      "curl_count": 16
+    },
+    {
+      "id": "curl/03-farm_farm-rpc",
+      "path": "wiki/curls/03-farm/farm-rpc.md",
+      "label": "农场/星舰 - farm-rpc",
+      "category": "curl",
+      "curl_count": 15
+    },
+    {
+      "id": "curl/03-farm_starship-info",
+      "path": "wiki/curls/03-farm/starship-info.md",
+      "label": "农场/星舰 - starship-info",
+      "category": "curl",
+      "curl_count": 1
+    },
+    {
+      "id": "curl/04-pretend_fragment",
+      "path": "wiki/curls/04-pretend/fragment.md",
+      "label": "装扮系统 - fragment",
+      "category": "curl",
+      "curl_count": 7
+    },
+    {
+      "id": "curl/04-pretend_send-drop",
+      "path": "wiki/curls/04-pretend/send-drop.md",
+      "label": "装扮系统 - send-drop",
+      "category": "curl",
+      "curl_count": 14
+    },
+    {
+      "id": "curl/05-ai_ai-card",
+      "path": "wiki/curls/05-ai/ai-card.md",
+      "label": "AI 人物 - ai-card",
+      "category": "curl",
+      "curl_count": 18
+    },
+    {
+      "id": "curl/06-backend_audit-ops",
+      "path": "wiki/curls/06-backend/audit-ops.md",
+      "label": "后台管理 - audit-ops",
+      "category": "curl",
+      "curl_count": 4
+    },
+    {
+      "id": "curl/06-backend_circle-pk-task",
+      "path": "wiki/curls/06-backend/circle-pk-task.md",
+      "label": "后台管理 - circle-pk-task",
+      "category": "curl",
+      "curl_count": 7
+    },
+    {
+      "id": "curl/06-backend_shop-bag",
+      "path": "wiki/curls/06-backend/shop-bag.md",
+      "label": "后台管理 - shop-bag",
+      "category": "curl",
+      "curl_count": 10
+    },
+    {
+      "id": "curl/06-backend_user-ops",
+      "path": "wiki/curls/06-backend/user-ops.md",
+      "label": "后台管理 - user-ops",
+      "category": "curl",
+      "curl_count": 11
+    },
+    {
+      "id": "curl/07-test_room-test",
+      "path": "wiki/curls/07-test/room-test.md",
+      "label": "测试端点 - room-test",
+      "category": "curl",
+      "curl_count": 7
+    },
+    {
+      "id": "curl/07-test_slp-test",
+      "path": "wiki/curls/07-test/slp-test.md",
+      "label": "测试端点 - slp-test",
+      "category": "curl",
+      "curl_count": 21
+    },
+    {
+      "id": "curl/07-test_starship-test",
+      "path": "wiki/curls/07-test/starship-test.md",
+      "label": "测试端点 - starship-test",
+      "category": "curl",
+      "curl_count": 4
+    },
+    {
+      "id": "curl/08-data-query_es-fix",
+      "path": "wiki/curls/08-data-query/es-fix.md",
+      "label": "数据查询 - ES 与数据修复",
+      "category": "curl",
+      "curl_count": 8
+    },
+    {
+      "id": "curl/08-data-query_sql-select",
+      "path": "wiki/curls/08-data-query/sql-select.md",
+      "label": "数据查询 - sql-select",
+      "category": "curl",
+      "curl_count": 4
+    },
+    {
+      "id": "curl/09-cache-consume_cache-ops",
+      "path": "wiki/curls/09-cache-consume/cache-ops.md",
+      "label": "缓存与消费 - cache-ops",
+      "category": "curl",
+      "curl_count": 7
+    },
+    {
+      "id": "curl/09-cache-consume_consume",
+      "path": "wiki/curls/09-cache-consume/consume.md",
+      "label": "缓存与消费 - consume",
+      "category": "curl",
+      "curl_count": 2
+    },
+    {
+      "id": "curl/10-activity_activity-reward",
+      "path": "wiki/curls/10-activity/activity-reward.md",
+      "label": "活动与支付 - activity-reward",
+      "category": "curl",
+      "curl_count": 1
+    },
+    {
+      "id": "curl/10-activity_audit-external",
+      "path": "wiki/curls/10-activity/audit-external.md",
+      "label": "活动与支付 - audit-external",
+      "category": "curl",
+      "curl_count": 1
+    },
+    {
+      "id": "curl/10-activity_pay",
+      "path": "wiki/curls/10-activity/pay.md",
+      "label": "活动与支付 - pay",
+      "category": "curl",
+      "curl_count": 4
+    }
+  ]
+}

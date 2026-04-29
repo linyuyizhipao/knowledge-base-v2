@@ -1,0 +1,18 @@
+# 忽略所有隐藏文件和目录（但保留 .git/）
+.*
+!.git/
+!.gitignore
+!.claude
+
+# 临时文件
+*.tmp
+*.temp
+*.log
+*.swp
+*~
+
+# 系统文件
+Thumbs.db
+
+llm-wiki-temp
+llm-wiki-temp/*

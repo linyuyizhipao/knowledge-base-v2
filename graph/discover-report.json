@@ -1,0 +1,722 @@
+{
+  "timestamp": "2026-04-29T10:35:49.573278",
+  "stats": {
+    "nodes": 53,
+    "edges": 130,
+    "citations": 30
+  },
+  "gaps": {
+    "isolated_nodes": [
+      {
+        "node": {
+          "id": "cross-projects/fly-chess/overview",
+          "label": "飞行棋概览",
+          "path": "curated/cross-projects/fly-chess/overview.md",
+          "category": "cross-project",
+          "role": "概览",
+          "desc": "飞行棋游戏",
+          "sources": [],
+          "created": "2026-04-28T23:44:13.502513"
+        },
+        "issue": "无任何连接",
+        "action": "添加引用或删除"
+      },
+      {
+        "node": {
+          "id": "cross-projects/buye-payment/overview",
+          "label": "不夜支付概览",
+          "path": "curated/cross-projects/buye-payment/overview.md",
+          "category": "cross-project",
+          "role": "概览",
+          "desc": "支付系统",
+          "sources": [],
+          "created": "2026-04-28T23:44:13.502528"
+        },
+        "issue": "无任何连接",
+        "action": "添加引用或删除"
+      },
+      {
+        "node": {
+          "id": "cross-projects/gift-suit/gift-suit-feature",
+          "label": "礼包套装功能",
+          "path": "curated/cross-projects/gift-suit/gift-suit-feature.md",
+          "category": "cross-project",
+          "role": "功能",
+          "desc": "礼包套装功能",
+          "sources": [],
+          "created": "2026-04-28T23:44:13.502533"
+        },
+        "issue": "无任何连接",
+        "action": "添加引用或删除"
+      }
+    ],
+    "peripheral_nodes": [
+      {
+        "node": {
+          "id": "patterns/database-naming-conventions",
+          "label": "数据库命名",
+          "path": "curated/patterns/database-naming-conventions.md",
+          "category": "pattern",
+          "role": "命名",
+          "desc": "数据库命名规范",
+          "sources": [],
+          "created": "2026-04-28T23:44:13.502195"
+        },
+        "issue": "只有一个连接",
+        "action": "检查是否需要更多引用"
+      },
+      {
+        "node": {
+          "id": "patterns/dev-to-dev-deployment",
+          "label": "部署流程",
+          "path": "curated/patterns/dev-to-dev-deployment.md",
+          "category": "pattern",
+          "role": "部署",
+          "desc": "开发到部署完整流程",
+          "sources": [],
+          "created": "2026-04-28T23:44:13.502200"
+        },
+        "issue": "只有一个连接",
+        "action": "检查是否需要更多引用"
+      },
+      {
+        "node": {
+          "id": "tools/gh-pr-analysis",
+          "label": "gh PR分析",
+          "path": "curated/tools/gh-pr-analysis.md",
+          "category": "tool",
+          "role": "PR",
+          "desc": "PR分析命令",
+          "sources": [],
+          "created": "2026-04-28T23:44:13.502220"
+        },
+        "issue": "只有一个连接",
+        "action": "检查是否需要更多引用"
+      },
+      {
+        "node": {
+          "id": "projects/slp-go/04-api",
+          "label": "slp-go API模式",
+          "path": "curated/projects/slp-go/04-api.md",
+          "category": "project",
+          "role": "API",
+          "desc": "API层开发模式",
+          "sources": [],
+          "created": "2026-04-28T23:44:13.502240"
+        },
+        "issue": "只有一个连接",
+        "action": "检查是否需要更多引用"
+      },
+      {
+        "node": {
+          "id": "projects/slp-go/06-dao",
+          "label": "slp-go DAO模式",
+          "path": "curated/projects/slp-go/06-dao.md",
+          "category": "project",
+          "role": "DAO",
+          "desc": "DAO层开发模式",
+          "sources": [],
+          "created": "2026-04-28T23:44:13.502250"
+        },
+        "issue": "只有一个连接",
+        "action": "检查是否需要更多引用"
+      },
+      {
+        "node": {
+          "id": "projects/slp-go/07-infra",
+          "label": "slp-go基础设施",
+          "path": "curated/projects/slp-go/07-infra.md",
+          "category": "project",
+          "role": "Infra",
+          "desc": "基础设施配置",
+          "sources": [],
+          "created": "2026-04-28T23:44:13.502254"
+        },
+        "issue": "只有一个连接",
+        "action": "检查是否需要更多引用"
+      },
+      {
+        "node": {
+          "id": "projects/slp-starship/01-event-capabilities",
+          "label": "slp-starship事件能力",
+          "path": "curated/projects/slp-starship/01-event-capabilities.md",
+          "category": "project",
+          "role": "事件",
+          "desc": "已支持的事件列表",
+          "sources": [],
+          "created": "2026-04-28T23:44:13.502457"
+        },
+        "issue": "只有一个连接",
+        "action": "检查是否需要更多引用"
+      },
+      {
+        "node": {
+          "id": "cross-projects/big-brother/passcode-requirement",
+          "label": "口令需求",
+          "path": "curated/cross-projects/big-brother/passcode-requirement.md",
+          "category": "cross-project",
+          "role": "需求",
+          "desc": "口令功能需求文档",
+          "sources": [],
+          "created": "2026-04-28T23:44:13.502483"
+        },
+        "issue": "只有一个连接",
+        "action": "检查是否需要更多引用"
+      },
+      {
+        "node": {
+          "id": "cross-projects/big-brother/test-report",
+          "label": "口令测试报告",
+          "path": "curated/cross-projects/big-brother/test-report.md",
+          "category": "cross-project",
+          "role": "测试",
+          "desc": "口令功能测试报告",
+          "sources": [],
+          "created": "2026-04-28T23:44:13.502493"
+        },
+        "issue": "只有一个连接",
+        "action": "检查是否需要更多引用"
+      },
+      {
+        "node": {
+          "id": "cross-projects/prayer-activity/slp-starship",
+          "label": "祈福 slp-starship实现",
+          "path": "curated/cross-projects/prayer-activity/slp-starship.md",
+          "category": "cross-project",
+          "role": "实现",
+          "desc": "slp-starship中的实现",
+          "sources": [],
+          "created": "2026-04-28T23:44:13.502508"
+        },
+        "issue": "只有一个连接",
+        "action": "检查是否需要更多引用"
+      },
+      {
+        "node": {
+          "id": "cross-projects/chatroom/room-type-concept",
+          "label": "房型概念",
+          "path": "curated/cross-projects/chatroom/room-type-concept.md",
+          "category": "cross-project",
+          "role": "概念",
+          "desc": "房型概念说明",
+          "sources": [],
+          "created": "2026-04-28T23:44:13.502523"
+        },
+        "issue": "只有一个连接",
+        "action": "检查是否需要更多引用"
+      }
+    ],
+    "sparse_communities": [
+      {
+        "community_id": 7,
+        "nodes": [
+          "USER_GUIDE",
+          "patterns/dev-to-dev-deployment",
+          "patterns/project-learning-framework",
+          "tools/slpctl-usage-guide",
+          "tools/gh-pr-analysis",
+          "projects/slp-go/01-structure",
+          "projects/slp-go/03-development",
+          "projects/slp-go/07-infra",
+          "projects/slp-starship/01-structure",
+          "projects/slp-common-rpc/CORE_LEARNING",
+          "cross-projects/prayer-activity/01-overview",
+          "cross-projects/prayer-activity/slp-starship",
+          "slpctl",
+          "slpctl#路由规则",
+          "slp-business-development-standard",
+          "dev-to-dev-deployment"
+        ],
+        "cohesion": 0.14166666666666666,
+        "action": "创建主题页整合，添加交叉引用"
+      },
+      {
+        "community_id": 3,
+        "nodes": [
+          "patterns/event-extension-guide",
+          "patterns/nsq-usage",
+          "patterns/cmd-module-standard",
+          "patterns/code-scale-standard",
+          "patterns/business-module-standard",
+          "patterns/business-code-example",
+          "patterns/database-naming-conventions",
+          "projects/slp-go/05-service",
+          "projects/slp-go/08-business-369-recharge",
+          "projects/slp-go/09-event-capabilities",
+          "projects/slp-starship/01-event-capabilities",
+          "cross-projects/369-recharge/overview",
+          "cross-projects/369-recharge/slp-room",
+          "cross-projects/big-brother/passcode-technical-design",
+          "cross-projects/big-brother/test-report",
+          "patterns/cache-usage-guide",
+          "event-extension-guide",
+          "cmd-module-standard",
+          "nsq-usage",
+          "patterns/README"
+        ],
+        "cohesion": 0.14736842105263157,
+        "action": "创建主题页整合，添加交叉引用"
+      }
+    ],
+    "bridge_nodes": [
+      {
+        "node_id": "CODING_STANDARDS",
+        "connected_communities": [
+          0,
+          8,
+          3,
+          7
+        ],
+        "importance": "连接多个知识领域的关键节点"
+      },
+      {
+        "node_id": "QUICK_REFERENCE",
+        "connected_communities": [
+          0,
+          3,
+          7
+        ],
+        "importance": "连接多个知识领域的关键节点"
+      },
+      {
+        "node_id": "USER_GUIDE",
+        "connected_communities": [
+          0,
+          2,
+          3,
+          7,
+          11
+        ],
+        "importance": "连接多个知识领域的关键节点"
+      },
+      {
+        "node_id": "DOCUMENT_LOCATION_RULES",
+        "connected_communities": [
+          0,
+          2,
+          7
+        ],
+        "importance": "连接多个知识领域的关键节点"
+      },
+      {
+        "node_id": "patterns/slp-business-development-standard",
+        "connected_communities": [
+          0,
+          3,
+          7
+        ],
+        "importance": "连接多个知识领域的关键节点"
+      },
+      {
+        "node_id": "patterns/event-extension-guide",
+        "connected_communities": [
+          0,
+          11,
+          3,
+          7
+        ],
+        "importance": "连接多个知识领域的关键节点"
+      },
+      {
+        "node_id": "patterns/code-scale-standard",
+        "connected_communities": [
+          11,
+          0,
+          3
+        ],
+        "importance": "连接多个知识领域的关键节点"
+      },
+      {
+        "node_id": "projects/slp-go/01-structure",
+        "connected_communities": [
+          3,
+          11,
+          7
+        ],
+        "importance": "连接多个知识领域的关键节点"
+      },
+      {
+        "node_id": "projects/slp-room/01-structure",
+        "connected_communities": [
+          3,
+          11,
+          7
+        ],
+        "importance": "连接多个知识领域的关键节点"
+      }
+    ],
+    "broken_links": [
+      {
+        "source": "overview",
+        "broken_target": "素材摘要",
+        "action": "创建目标页面或修复链接"
+      },
+      {
+        "source": "overview",
+        "broken_target": "实体页",
+        "action": "创建目标页面或修复链接"
+      },
+      {
+        "source": "overview",
+        "broken_target": "主题页",
+        "action": "创建目标页面或修复链接"
+      },
+      {
+        "source": "overview",
+        "broken_target": "对比分析",
+        "action": "创建目标页面或修复链接"
+      },
+      {
+        "source": "overview",
+        "broken_target": "综合分析",
+        "action": "创建目标页面或修复链接"
+      },
+      {
+        "source": "tools/slpctl-usage-guide",
+        "broken_target": "slpctl#路由规则",
+        "action": "创建目标页面或修复链接"
+      },
+      {
+        "source": "projects/slp-go-infra",
+        "broken_target": "database.default",
+        "action": "创建目标页面或修复链接"
+      }
+    ]
+  },
+  "communities": {
+    "0": [
+      "AGENTS",
+      "CODING_STANDARDS",
+      "AI_WORKFLOW",
+      "QUICK_REFERENCE",
+      "INDEX",
+      "README",
+      "patterns/slp-business-development-standard",
+      "patterns/code-scale-standard",
+      "business-module-standard",
+      "slpctl-usage-guide",
+      "room-type-development-template"
+    ],
+    "1": [
+      "USER_GUIDE",
+      "patterns/dev-to-dev-deployment",
+      "patterns/project-learning-framework",
+      "tools/slpctl-usage-guide",
+      "tools/gh-pr-analysis",
+      "projects/slp-go/01-structure",
+      "projects/slp-go/03-development",
+      "projects/slp-go/07-infra",
+      "projects/slp-starship/01-structure",
+      "projects/slp-common-rpc/CORE_LEARNING",
+      "cross-projects/prayer-activity/01-overview",
+      "cross-projects/prayer-activity/slp-starship",
+      "slpctl",
+      "slpctl#路由规则",
+      "slp-business-development-standard",
+      "dev-to-dev-deployment"
+    ],
+    "2": [
+      "DOCUMENT_LOCATION_RULES",
+      "cross-projects/chatroom/room-type-development",
+      "cross-projects/chatroom/room-type-concept"
+    ],
+    "3": [
+      "patterns/event-extension-guide",
+      "patterns/nsq-usage",
+      "patterns/cmd-module-standard",
+      "projects/slp-go/08-business-369-recharge",
+      "projects/slp-go/09-event-capabilities",
+      "projects/slp-starship/01-event-capabilities",
+      "cross-projects/369-recharge/overview",
+      "event-extension-guide",
+      "cmd-module-standard",
+      "nsq-usage",
+      "patterns/README"
+    ],
+    "8": [
+      "patterns/architecture-layered-standard",
+      "projects/slp-go/02-architecture",
+      "projects/slp-room/01-structure",
+      "projects/slp-room/02-architecture",
+      "projects/slp-room/01-event-capabilities",
+      "cross-projects/369-recharge/slp-room",
+      "cross-projects/big-brother/README-PASSCODE",
+      "cross-projects/big-brother/passcode-requirement",
+      "cross-projects/big-brother/pet-feature"
+    ],
+    "5": [
+      "patterns/business-module-standard",
+      "patterns/business-code-example",
+      "patterns/database-naming-conventions",
+      "projects/slp-go/05-service",
+      "cross-projects/big-brother/passcode-technical-design",
+      "cross-projects/big-brother/test-report",
+      "patterns/cache-usage-guide"
+    ],
+    "7": [
+      "tools/slpctl",
+      "projects/slp-go/04-api",
+      "projects/slp-go/06-dao"
+    ],
+    "11": [
+      "cross-projects/fly-chess/overview"
+    ],
+    "12": [
+      "cross-projects/buye-payment/overview"
+    ],
+    "10": [
+      "cross-projects/gift-suit/gift-suit-feature"
+    ],
+    "4": [
+      "cross-projects/decorate-commodity-use/overview",
+      "cross-projects/decorate-commodity-use/slp-go",
+      "cross-projects/decorate-commodity-use/slp-php"
+    ],
+    "6": [
+      "overview",
+      "素材摘要",
+      "实体页",
+      "主题页",
+      "对比分析",
+      "综合分析"
+    ],
+    "9": [
+      "projects/slp-go-infra",
+      "database.default"
+    ]
+  },
+  "surprising_connections": [
+    {
+      "from": "AGENTS",
+      "to": "USER_GUIDE",
+      "from_community": 0,
+      "to_community": 1,
+      "weight": 1.0,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "CODING_STANDARDS",
+      "to": "USER_GUIDE",
+      "from_community": 0,
+      "to_community": 1,
+      "weight": 1.0,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "CODING_STANDARDS",
+      "to": "tools/slpctl",
+      "from_community": 0,
+      "to_community": 7,
+      "weight": 1.0,
+      "surprise_level": "high"
+    },
+    {
+      "from": "CODING_STANDARDS",
+      "to": "tools/slpctl-usage-guide",
+      "from_community": 0,
+      "to_community": 1,
+      "weight": 2.0,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "CODING_STANDARDS",
+      "to": "patterns/cache-usage-guide",
+      "from_community": 0,
+      "to_community": 5,
+      "weight": 2.0,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "QUICK_REFERENCE",
+      "to": "USER_GUIDE",
+      "from_community": 0,
+      "to_community": 1,
+      "weight": 0.5,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "QUICK_REFERENCE",
+      "to": "patterns/event-extension-guide",
+      "from_community": 0,
+      "to_community": 3,
+      "weight": 0.5,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "INDEX",
+      "to": "DOCUMENT_LOCATION_RULES",
+      "from_community": 0,
+      "to_community": 2,
+      "weight": 0.5,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "USER_GUIDE",
+      "to": "patterns/slp-business-development-standard",
+      "from_community": 1,
+      "to_community": 0,
+      "weight": 1.0,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "USER_GUIDE",
+      "to": "patterns/event-extension-guide",
+      "from_community": 1,
+      "to_community": 3,
+      "weight": 1.0,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "USER_GUIDE",
+      "to": "patterns/nsq-usage",
+      "from_community": 1,
+      "to_community": 3,
+      "weight": 1.0,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "USER_GUIDE",
+      "to": "projects/slp-room/01-structure",
+      "from_community": 1,
+      "to_community": 8,
+      "weight": 1.5,
+      "surprise_level": "high"
+    },
+    {
+      "from": "USER_GUIDE",
+      "to": "DOCUMENT_LOCATION_RULES",
+      "from_community": 1,
+      "to_community": 2,
+      "weight": 0.5,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "patterns/slp-business-development-standard",
+      "to": "tools/slpctl-usage-guide",
+      "from_community": 0,
+      "to_community": 1,
+      "weight": 0.5,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "patterns/slp-business-development-standard",
+      "to": "projects/slp-go/03-development",
+      "from_community": 0,
+      "to_community": 1,
+      "weight": 0.5,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "patterns/slp-business-development-standard",
+      "to": "cmd-module-standard",
+      "from_community": 0,
+      "to_community": 3,
+      "weight": 0.5,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "patterns/event-extension-guide",
+      "to": "patterns/business-module-standard",
+      "from_community": 3,
+      "to_community": 5,
+      "weight": 2.0,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "patterns/event-extension-guide",
+      "to": "patterns/business-code-example",
+      "from_community": 3,
+      "to_community": 5,
+      "weight": 0.5,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "patterns/event-extension-guide",
+      "to": "projects/slp-room/01-event-capabilities",
+      "from_community": 3,
+      "to_community": 8,
+      "weight": 0.5,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "patterns/nsq-usage",
+      "to": "patterns/cache-usage-guide",
+      "from_community": 3,
+      "to_community": 5,
+      "weight": 1.5,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "patterns/code-scale-standard",
+      "to": "patterns/business-module-standard",
+      "from_community": 0,
+      "to_community": 5,
+      "weight": 1.0,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "patterns/code-scale-standard",
+      "to": "patterns/architecture-layered-standard",
+      "from_community": 0,
+      "to_community": 8,
+      "weight": 0.5,
+      "surprise_level": "high"
+    },
+    {
+      "from": "patterns/code-scale-standard",
+      "to": "event-extension-guide",
+      "from_community": 0,
+      "to_community": 3,
+      "weight": 0.5,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "patterns/code-scale-standard",
+      "to": "cmd-module-standard",
+      "from_community": 0,
+      "to_community": 3,
+      "weight": 0.5,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "patterns/architecture-layered-standard",
+      "to": "patterns/business-module-standard",
+      "from_community": 8,
+      "to_community": 5,
+      "weight": 0.5,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "projects/slp-go/01-structure",
+      "to": "projects/slp-go/02-architecture",
+      "from_community": 1,
+      "to_community": 8,
+      "weight": 0.5,
+      "surprise_level": "high"
+    },
+    {
+      "from": "projects/slp-go/01-structure",
+      "to": "projects/slp-go/05-service",
+      "from_community": 1,
+      "to_community": 5,
+      "weight": 0.5,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "cross-projects/369-recharge/overview",
+      "to": "cross-projects/369-recharge/slp-room",
+      "from_community": 3,
+      "to_community": 8,
+      "weight": 0.5,
+      "surprise_level": "medium"
+    },
+    {
+      "from": "cross-projects/big-brother/README-PASSCODE",
+      "to": "cross-projects/big-brother/passcode-technical-design",
+      "from_community": 8,
+      "to_community": 5,
+      "weight": 0.5,
+      "surprise_level": "medium"
+    }
+  ]
+}

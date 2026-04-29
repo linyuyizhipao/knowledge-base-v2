@@ -1,0 +1,34 @@
+# citations.jsonl - wikilink 引用关系
+# 更新时间: 2026-04-29T00:09:12.654022
+# 总计: 30 条
+#
+{"from": "overview", "to": "素材摘要", "type": "wikilink", "weight": 0.5, "source_file": "wiki/overview.md", "created": "2026-04-29T00:09:12.647771"}
+{"from": "overview", "to": "实体页", "type": "wikilink", "weight": 0.5, "source_file": "wiki/overview.md", "created": "2026-04-29T00:09:12.647778"}
+{"from": "overview", "to": "主题页", "type": "wikilink", "weight": 0.5, "source_file": "wiki/overview.md", "created": "2026-04-29T00:09:12.647783"}
+{"from": "overview", "to": "对比分析", "type": "wikilink", "weight": 0.5, "source_file": "wiki/overview.md", "created": "2026-04-29T00:09:12.647789"}
+{"from": "overview", "to": "综合分析", "type": "wikilink", "weight": 0.5, "source_file": "wiki/overview.md", "created": "2026-04-29T00:09:12.647794"}
+{"from": "tools/slpctl-usage-guide", "to": "slpctl", "type": "wikilink", "weight": 0.5, "source_file": "wiki/tools/slpctl-usage-guide.md", "created": "2026-04-29T00:09:12.648792"}
+{"from": "tools/slpctl-usage-guide", "to": "slpctl#路由规则", "type": "wikilink", "weight": 0.5, "source_file": "wiki/tools/slpctl-usage-guide.md", "created": "2026-04-29T00:09:12.648798"}
+{"from": "tools/slpctl-usage-guide", "to": "slpctl", "type": "wikilink", "weight": 0.5, "source_file": "wiki/tools/slpctl-usage-guide.md", "created": "2026-04-29T00:09:12.648803"}
+{"from": "tools/slpctl-usage-guide", "to": "slp-business-development-standard", "type": "wikilink", "weight": 0.5, "source_file": "wiki/tools/slpctl-usage-guide.md", "created": "2026-04-29T00:09:12.648808"}
+{"from": "tools/slpctl-usage-guide", "to": "dev-to-dev-deployment", "type": "wikilink", "weight": 0.5, "source_file": "wiki/tools/slpctl-usage-guide.md", "created": "2026-04-29T00:09:12.648813"}
+{"from": "patterns/code-scale-standard", "to": "event-extension-guide", "type": "wikilink", "weight": 0.5, "source_file": "wiki/patterns/code-scale-standard.md", "created": "2026-04-29T00:09:12.649445"}
+{"from": "patterns/code-scale-standard", "to": "cmd-module-standard", "type": "wikilink", "weight": 0.5, "source_file": "wiki/patterns/code-scale-standard.md", "created": "2026-04-29T00:09:12.649451"}
+{"from": "patterns/slp-business-development-standard", "to": "business-module-standard", "type": "wikilink", "weight": 0.5, "source_file": "wiki/patterns/slp-business-development-standard.md", "created": "2026-04-29T00:09:12.649570"}
+{"from": "patterns/slp-business-development-standard", "to": "slpctl-usage-guide", "type": "wikilink", "weight": 0.5, "source_file": "wiki/patterns/slp-business-development-standard.md", "created": "2026-04-29T00:09:12.649575"}
+{"from": "patterns/slp-business-development-standard", "to": "cmd-module-standard", "type": "wikilink", "weight": 0.5, "source_file": "wiki/patterns/slp-business-development-standard.md", "created": "2026-04-29T00:09:12.649580"}
+{"from": "patterns/slp-business-development-standard", "to": "room-type-development-template", "type": "wikilink", "weight": 0.5, "source_file": "wiki/patterns/slp-business-development-standard.md", "created": "2026-04-29T00:09:12.649585"}
+{"from": "patterns/nsq-usage", "to": "event-extension-guide", "type": "wikilink", "weight": 0.5, "source_file": "wiki/patterns/nsq-usage.md", "created": "2026-04-29T00:09:12.649708"}
+{"from": "patterns/nsq-usage", "to": "event-extension-guide", "type": "wikilink", "weight": 0.5, "source_file": "wiki/patterns/nsq-usage.md", "created": "2026-04-29T00:09:12.649713"}
+{"from": "patterns/nsq-usage", "to": "event-extension-guide", "type": "wikilink", "weight": 0.5, "source_file": "wiki/patterns/nsq-usage.md", "created": "2026-04-29T00:09:12.649718"}
+{"from": "patterns/nsq-usage", "to": "event-extension-guide", "type": "wikilink", "weight": 0.5, "source_file": "wiki/patterns/nsq-usage.md", "created": "2026-04-29T00:09:12.649723"}
+{"from": "patterns/nsq-usage", "to": "event-extension-guide", "type": "wikilink", "weight": 0.5, "source_file": "wiki/patterns/nsq-usage.md", "created": "2026-04-29T00:09:12.649727"}
+{"from": "patterns/nsq-usage", "to": "cmd-module-standard", "type": "wikilink", "weight": 0.5, "source_file": "wiki/patterns/nsq-usage.md", "created": "2026-04-29T00:09:12.649732"}
+{"from": "patterns/event-extension-guide", "to": "nsq-usage", "type": "wikilink", "weight": 0.5, "source_file": "wiki/patterns/event-extension-guide.md", "created": "2026-04-29T00:09:12.649797"}
+{"from": "patterns/event-extension-guide", "to": "cmd-module-standard", "type": "wikilink", "weight": 0.5, "source_file": "wiki/patterns/event-extension-guide.md", "created": "2026-04-29T00:09:12.649802"}
+{"from": "patterns/event-extension-guide", "to": "nsq-usage", "type": "wikilink", "weight": 0.5, "source_file": "wiki/patterns/event-extension-guide.md", "created": "2026-04-29T00:09:12.649807"}
+{"from": "patterns/README", "to": "event-extension-guide", "type": "wikilink", "weight": 0.5, "source_file": "wiki/patterns/README.md", "created": "2026-04-29T00:09:12.649853"}
+{"from": "patterns/cmd-module-standard", "to": "event-extension-guide", "type": "wikilink", "weight": 0.5, "source_file": "wiki/patterns/cmd-module-standard.md", "created": "2026-04-29T00:09:12.649902"}
+{"from": "patterns/cmd-module-standard", "to": "event-extension-guide", "type": "wikilink", "weight": 0.5, "source_file": "wiki/patterns/cmd-module-standard.md", "created": "2026-04-29T00:09:12.649908"}
+{"from": "patterns/cmd-module-standard", "to": "nsq-usage", "type": "wikilink", "weight": 0.5, "source_file": "wiki/patterns/cmd-module-standard.md", "created": "2026-04-29T00:09:12.649912"}
+{"from": "projects/slp-go-infra", "to": "database.default", "type": "wikilink", "weight": 0.5, "source_file": "wiki/projects/slp-go-infra.md", "created": "2026-04-29T00:09:12.652320"}

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Base v2 - 知识图谱</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            min-height: 100vh;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 300px 1fr 300px;
+            height: 100vh;
+        }
+        .panel {
+            padding: 20px;
+            border-right: 1px solid #333;
+        }
+        .panel:last-child { border-right: none; border-left: 1px solid #333; }
+        h1 { font-size: 1.5em; margin-bottom: 20px; color: #00d4ff; }
+        h2 { font-size: 1.2em; margin-bottom: 15px; color: #00d4ff; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .stats { background: #16213e; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .stats-item { display: flex; justify-content: space-between; margin: 5px 0; }
+        .stats-value { color: #00d4ff; font-weight: bold; }
+        .category { margin-bottom: 15px; }
+        .category-title { font-size: 0.9em; color: #888; margin-bottom: 5px; }
+        .category-count { color: #00d4ff; }
+        .node-list { max-height: 300px; overflow-y: auto; }
+        .node-item {
+            padding: 8px;
+            background: #16213e;
+            margin: 5px 0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .node-item:hover { background: #1f3460; }
+        .node-item.isolated { border-left: 3px solid #ff6b6b; }
+        .node-item.bridge { border-left: 3px solid #4ecdc4; }
+        .node-id { font-size: 0.8em; color: #888; }
+        .node-label { font-weight: 500; }
+        #graph-container {
+            position: relative;
+            overflow: hidden;
+        }
+        #graph-canvas {
+            width: 100%;
+            height: 100%;
+            background: #16213e;
+        }
+        .legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .legend-item { display: flex; align-items: center; margin: 5px 0; }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .gaps-panel { }
+        .gap-item {
+            padding: 10px;
+            background: #16213e;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+        .gap-title { color: #ff6b6b; font-weight: bold; }
+        .gap-desc { color: #888; font-size: 0.9em; margin-top: 5px; }
+        .gap-action { color: #4ecdc4; font-size: 0.85em; margin-top: 5px; }
+        .improvement {
+            background: linear-gradient(135deg, #16213e, #1f3460);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .improvement-title { color: #4ecdc4; font-size: 1.1em; margin-bottom: 10px; }
+        .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 10px; }
+        .comparison-item { background: #16213e; padding: 15px; border-radius: 8px; }
+        .comparison-label { color: #888; font-size: 0.85em; }
+        .comparison-value { font-size: 1.5em; color: #00d4ff; margin-top: 5px; }
+        .comparison-diff { color: #4ecdc4; font-size: 0.9em; }
+        .controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .control-btn {
+            background: #16213e;
+            border: 1px solid #333;
+            color: #eee;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .control-btn:hover { background: #1f3460; border-color: #00d4ff; }
+        .tooltip {
+            position: absolute;
+            background: rgba(0,0,0,0.9);
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+            max-width: 300px;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 左侧面板：统计和节点列表 -->
+        <div class="panel">
+            <h1>Knowledge Base v2</h1>
+            <div class="improvement">
+                <div class="improvement-title">修复效果</div>
+                <div class="comparison">
+                    <div class="comparison-item">
+                        <div class="comparison-label">孤立节点</div>
+                        <div class="comparison-value">28 → 3</div>
+                        <div class="comparison-diff">-25 ↓</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">关系边</div>
+                        <div class="comparison-value">24 → 118</div>
+                        <div class="comparison-diff">+94 ↑</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">断链</div>
+                        <div class="comparison-value">23 → 7</div>
+                        <div class="comparison-diff">-16 ↓</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">社区数</div>
+                        <div class="comparison-value">35 → 12</div>
+                        <div class="comparison-diff">更紧凑</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats">
+                <h2>图谱统计</h2>
+                <div class="stats-item">
+                    <span>节点总数</span>
+                    <span class="stats-value">73</span>
+                </div>
+                <div class="stats-item">
+                    <span>关系边</span>
+                    <span class="stats-value">118</span>
+                </div>
+                <div class="stats-item">
+                    <span>Wikilinks</span>
+                    <span class="stats-value">30</span>
+                </div>
+                <div class="stats-item">
+                    <span>桥节点</span>
+                    <span class="stats-value">10</span>
+                </div>
+                <div class="stats-item">
+                    <span>跨社区连接</span>
+                    <span class="stats-value">19</span>
+                </div>
+            </div>
+
+            <h2>节点分类</h2>
+            <div class="category">
+                <div class="category-title">core</div>
+                <div class="category-count">8 个</div>
+            </div>
+            <div class="category">
+                <div class="category-title">patterns</div>
+                <div class="category-count">13 个</div>
+            </div>
+            <div class="category">
+                <div class="category-title">projects</div>
+                <div class="category-count">15 个</div>
+            </div>
+            <div class="category">
+                <div class="category-title">cross-projects</div>
+                <div class="category-count">22 个</div>
+            </div>
+            <div class="category">
+                <div class="category-title">tools</div>
+                <div class="category-count">3 个</div>
+            </div>
+
+            <h2>桥节点（关键连接）</h2>
+            <div class="node-list">
+                <div class="node-item bridge">
+                    <div class="node-label">USER_GUIDE</div>
+                    <div class="node-id">连接 3 个社区</div>
+                </div>
+                <div class="node-item bridge">
+                    <div class="node-label">patterns/event-extension-guide</div>
+                    <div class="node-id">连接 3 个社区</div>
+                </div>
+                <div class="node-item bridge">
+                    <div class="node-label">patterns/nsq-usage</div>
+                    <div class="node-id">连接 3 个社区</div>
+                </div>
+                <div class="node-item bridge">
+                    <div class="node-label">CODING_STANDARDS</div>
+                    <div class="node-id">连接多个社区</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 中间：知识图谱可视化 -->
+        <div id="graph-container">
+            <canvas id="graph-canvas"></canvas>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ff6b6b;"></div>
+                    <span>孤立节点</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #4ecdc4;"></div>
+                    <span>桥节点</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #00d4ff;"></div>
+                    <span>核心节点</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #888;"></div>
+                    <span>普通节点</span>
+                </div>
+            </div>
+            <div class="controls">
+                <button class="control-btn" onclick="zoomIn()">放大</button>
+                <button class="control-btn" onclick="zoomOut()">缩小</button>
+                <button class="control-btn" onclick="resetView()">重置</button>
+            </div>
+            <div class="tooltip" id="tooltip"></div>
+        </div>
+
+        <!-- 右侧面板：知识缺口 -->
+        <div class="panel gaps-panel">
+            <h2>剩余缺口</h2>
+
+            <div class="gap-item">
+                <div class="gap-title">孤立节点 (3)</div>
+                <div class="gap-desc">fly-chess/overview, buye-payment/overview, gift-suit-feature</div>
+                <div class="gap-action">建议：创建主题页或添加引用</div>
+            </div>
+
+            <div class="gap-item">
+                <div class="gap-title">断链 (7)</div>
+                <div class="gap-desc">部分 wikilink 目标仍不存在</div>
+                <div class="gap-action">建议：创建占位页面</div>
+            </div>
+
+            <h2>社区结构</h2>
+            <div class="gap-item">
+                <div class="gap-title">社区 1 (15 节点)</div>
+                <div class="gap-desc">cohesion: 0.18</div>
+                <div class="gap-action">核心规范社区</div>
+            </div>
+            <div class="gap-item">
+                <div class="gap-title">社区 8 (15 节点)</div>
+                <div class="gap-desc">cohesion: 0.15</div>
+                <div class="gap-action">跨项目业务社区</div>
+            </div>
+            <div class="gap-item">
+                <div class="gap-title">社区 6 (13 节点)</div>
+                <div class="gap-desc">cohesion: 0.22</div>
+                <div class="gap-action">patterns 社区</div>
+            </div>
+
+            <h2>惊讶连接</h2>
+            <p style="color: #888; font-size: 0.85em; margin: 10px 0;">
+                跨社区的连接表示不同知识领域之间的关联
+            </p>
+            <div class="node-item">
+                <div class="node-label">CODING_STANDARDS → slpctl</div>
+                <div class="node-id">禁令 → 工具</div>
+            </div>
+            <div class="node-item">
+                <div class="node-label">USER_GUIDE → event-extension-guide</div>
+                <div class="node-id">导航 → 规范</div>
+            </div>
+            <div class="node-item">
+                <div class="node-label">QUICK_REFERENCE → event-extension-guide</div>
+                <div class="node-id">速查 → 规范</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 简化的图谱绘制（Canvas）
+        const canvas = document.getElementById('graph-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let nodes = [];
+        let edges = [];
+        let scale = 1;
+        let offsetX = 0, offsetY = 0;
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+            draw();
+        }
+
+        function generateNodes() {
+            // 模拟节点数据
+            const categories = ['core', 'patterns', 'projects', 'cross-projects', 'tools'];
+            const colors = {
+                'core': '#00d4ff',
+                'patterns': '#4ecdc4',
+                'projects': '#ff6b6b',
+                'cross-projects': '#ffd93d',
+                'tools': '#c9b1ff'
+            };
+
+            // 生成节点
+            const nodeData = [
+                {id: 'AGENTS', label: 'AI入口', category: 'core', bridge: true},
+                {id: 'CODING_STANDARDS', label: '核心禁令', category: 'core', bridge: true},
+                {id: 'USER_GUIDE', label: '使用指南', category: 'core', bridge: true},
+                {id: 'AI_WORKFLOW', label: '开发流程', category: 'core'},
+                {id: 'QUICK_REFERENCE', label: '快速参考', category: 'core'},
+                {id: 'INDEX', label: '文档索引', category: 'core'},
+                {id: 'patterns/event-extension-guide', label: '事件指南', category: 'patterns', bridge: true},
+                {id: 'patterns/nsq-usage', label: 'NSQ规范', category: 'patterns', bridge: true},
+                {id: 'patterns/slp-business-development-standard', label: '业务规范', category: 'patterns'},
+                {id: 'patterns/business-module-standard', label: '模块标准', category: 'patterns'},
+                {id: 'patterns/cmd-module-standard', label: 'CMD标准', category: 'patterns'},
+                {id: 'patterns/code-scale-standard', label: '代码规模', category: 'patterns'},
+                {id: 'projects/slp-go/01-structure', label: 'slp-go结构', category: 'projects'},
+                {id: 'projects/slp-room/01-structure', label: 'slp-room结构', category: 'projects'},
+                {id: 'projects/slp-starship/01-structure', label: 'slp-starship结构', category: 'projects'},
+                {id: 'cross-projects/369-recharge/overview', label: '369业务', category: 'cross-projects'},
+                {id: 'cross-projects/big-brother/pet-feature', label: '宠物功能', category: 'cross-projects'},
+                {id: 'tools/slpctl', label: 'slpctl', category: 'tools'},
+                {id: 'tools/slpctl-usage-guide', label: 'slpctl指南', category: 'tools', bridge: true},
+            ];
+
+            // 随机位置
+            nodes = nodeData.map((n, i) => ({
+                ...n,
+                x: Math.random() * canvas.width * 0.8 + canvas.width * 0.1,
+                y: Math.random() * canvas.height * 0.8 + canvas.height * 0.1,
+                vx: 0, vy: 0,
+                radius: n.bridge ? 20 : 15,
+                color: n.bridge ? '#4ecdc4' : (colors[n.category] || '#888')
+            }));
+
+            // 添加一些孤立节点
+            const isolatedNodes = [
+                {id: 'fly-chess/overview', label: '飞行棋', category: 'cross-projects', isolated: true},
+                {id: 'buye-payment/overview', label: '不夜支付', category: 'cross-projects', isolated: true},
+                {id: 'gift-suit-feature', label: '礼包套装', category: 'cross-projects', isolated: true},
+            ];
+
+            isolatedNodes.forEach(n => {
+                nodes.push({
+                    ...n,
+                    x: Math.random() * canvas.width * 0.8 + canvas.width * 0.1,
+                    y: Math.random() * canvas.height * 0.8 + canvas.height * 0.1,
+                    vx: 0, vy: 0,
+                    radius: 15,
+                    color: '#ff6b6b'
+                });
+            });
+
+            // 生成边
+            edges = [
+                {from: 'AGENTS', to: 'CODING_STANDARDS'},
+                {from: 'AGENTS', to: 'USER_GUIDE'},
+                {from: 'CODING_STANDARDS', to: 'USER_GUIDE'},
+                {from: 'CODING_STANDARDS', to: 'tools/slpctl'},
+                {from: 'USER_GUIDE', to: 'patterns/event-extension-guide'},
+                {from: 'USER_GUIDE', to: 'patterns/nsq-usage'},
+                {from: 'USER_GUIDE', to: 'projects/slp-go/01-structure'},
+                {from: 'USER_GUIDE', to: 'projects/slp-room/01-structure'},
+                {from: 'patterns/event-extension-guide', to: 'patterns/nsq-usage'},
+                {from: 'patterns/business-module-standard', to: 'patterns/code-scale-standard'},
+                {from: 'QUICK_REFERENCE', to: 'patterns/event-extension-guide'},
+                {from: 'patterns/slp-business-development-standard', to: 'patterns/event-extension-guide'},
+                {from: 'tools/slpctl-usage-guide', to: 'CODING_STANDARDS'},
+                {from: 'tools/slpctl-usage-guide', to: 'patterns/slp-business-development-standard'},
+                {from: 'projects/slp-go/01-structure', to: 'projects/slp-room/01-structure'},
+                {from: 'cross-projects/369-recharge/overview', to: 'projects/slp-go/01-structure'},
+                {from: 'cross-projects/big-brother/pet-feature', to: 'projects/slp-room/01-structure'},
+            ];
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(offsetX, offsetY);
+            ctx.scale(scale, scale);
+
+            // 绘制边
+            ctx.strokeStyle = 'rgba(100, 100, 100, 0.5)';
+            ctx.lineWidth = 1;
+
+            edges.forEach(e => {
+                const fromNode = nodes.find(n => n.id === e.from);
+                const toNode = nodes.find(n => n.id === e.to);
+                if (fromNode && toNode) {
+                    ctx.beginPath();
+                    ctx.moveTo(fromNode.x, fromNode.y);
+                    ctx.lineTo(toNode.x, toNode.y);
+                    ctx.stroke();
+                }
+            });
+
+            // 绘制节点
+            nodes.forEach(n => {
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+                ctx.fillStyle = n.color;
+                ctx.fill();
+
+                // 标签
+                ctx.fillStyle = '#fff';
+                ctx.font = '12px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(n.label, n.x, n.y + n.radius + 15);
+            });
+
+            ctx.restore();
+        }
+
+        function zoomIn() { scale *= 1.2; draw(); }
+        function zoomOut() { scale /= 1.2; draw(); }
+        function resetView() { scale = 1; offsetX = 0; offsetY = 0; draw(); }
+
+        // 初始化
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        generateNodes();
+
+        // 简单的拖动和点击交互
+        let dragging = false;
+        let lastX, lastY;
+
+        canvas.addEventListener('mousedown', e => {
+            dragging = true;
+            lastX = e.clientX;
+            lastY = e.clientY;
+        });
+
+        canvas.addEventListener('mousemove', e => {
+            if (dragging) {
+                offsetX += e.clientX - lastX;
+                offsetY += e.clientY - lastY;
+                lastX = e.clientX;
+                lastY = e.clientY;
+                draw();
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => dragging = false);
+    </script>
+</body>
+</html>

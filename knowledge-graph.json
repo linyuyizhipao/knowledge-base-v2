@@ -1,0 +1,861 @@
+{
+  "name": "SLP 知识库",
+  "version": "2.0",
+  "updated": "2026-04-25",
+  "stats": {
+    "total_nodes": 62,
+    "total_edges": 136
+  },
+  "categories": {
+    "core": {
+      "count": 8,
+      "desc": "核心入口文档"
+    },
+    "project": {
+      "count": 15,
+      "desc": "项目知识（slp-go, slp-room, slp-starship）"
+    },
+    "cross-project": {
+      "count": 22,
+      "desc": "跨项目业务（369观光团、大哥管理等）"
+    },
+    "pattern": {
+      "count": 13,
+      "desc": "开发规范、模式指南"
+    },
+    "tool": {
+      "count": 3,
+      "desc": "工具文档（slpctl, gh-pr）"
+    }
+  },
+  "nodes": [
+    {
+      "id": "AGENTS",
+      "label": "AI统一入口",
+      "path": "curated/AGENTS.md",
+      "category": "core",
+      "role": "入口",
+      "desc": "所有AI工具必读，包含检查点、禁令、文档结构",
+      "must_read": true,
+      "links_to": [
+        "CODING_STANDARDS",
+        "INDEX",
+        "USER_GUIDE",
+        "tools/slpctl"
+      ]
+    },
+    {
+      "id": "CODING_STANDARDS",
+      "label": "核心禁令",
+      "path": "curated/CODING_STANDARDS.md",
+      "category": "core",
+      "role": "禁令",
+      "desc": "编码禁止事项：禁止手动写API、禁止循环IO、禁止阻塞",
+      "must_read": true,
+      "links_to": [
+        "USER_GUIDE",
+        "AI_WORKFLOW",
+        "tools/slpctl",
+        "patterns/code-scale-standard",
+        "patterns/business-module-standard"
+      ]
+    },
+    {
+      "id": "AI_WORKFLOW",
+      "label": "5阶段开发流程",
+      "path": "curated/AI_WORKFLOW.md",
+      "category": "core",
+      "role": "流程",
+      "desc": "需求→检索→设计→开发→沉淀",
+      "links_to": []
+    },
+    {
+      "id": "QUICK_REFERENCE",
+      "label": "快速参考卡片",
+      "path": "curated/QUICK_REFERENCE.md",
+      "category": "core",
+      "role": "速查",
+      "desc": "命令速查、常用路径",
+      "links_to": [
+        "CODING_STANDARDS",
+        "USER_GUIDE",
+        "AI_WORKFLOW",
+        "patterns/event-extension-guide",
+        "patterns/cmd-module-standard"
+      ]
+    },
+    {
+      "id": "INDEX",
+      "label": "文档索引",
+      "path": "curated/INDEX.md",
+      "category": "core",
+      "role": "索引",
+      "desc": "写文档前必查，避免重复创建",
+      "must_read_before_write": true,
+      "links_to": [
+        "AGENTS",
+        "CODING_STANDARDS",
+        "AI_WORKFLOW",
+        "QUICK_REFERENCE"
+      ]
+    },
+    {
+      "id": "USER_GUIDE",
+      "label": "使用指南",
+      "path": "curated/USER_GUIDE.md",
+      "category": "core",
+      "role": "导航",
+      "desc": "场景导航：学习项目、开发任务、跨项目业务",
+      "links_to": [
+        "patterns/slp-business-development-standard",
+        "patterns/event-extension-guide",
+        "patterns/nsq-usage",
+        "patterns/dev-to-dev-deployment",
+        "tools/slpctl",
+        "projects/slp-go/01-structure"
+      ]
+    },
+    {
+      "id": "README",
+      "label": "项目说明",
+      "path": "curated/README.md",
+      "category": "core",
+      "role": "说明",
+      "desc": "知识库介绍",
+      "links_to": [
+        "AGENTS",
+        "CODING_STANDARDS",
+        "INDEX",
+        "USER_GUIDE"
+      ]
+    },
+    {
+      "id": "DOCUMENT_LOCATION_RULES",
+      "label": "文档存放规则",
+      "path": "curated/DOCUMENT_LOCATION_RULES.md",
+      "category": "core",
+      "role": "规则",
+      "desc": "写文档前确认存放位置",
+      "links_to": [
+        "cross-projects/chatroom/room-type-development"
+      ]
+    },
+    {
+      "id": "patterns/slp-business-development-standard",
+      "label": "业务开发规范",
+      "path": "curated/patterns/slp-business-development-standard.md",
+      "category": "pattern",
+      "role": "核心规范",
+      "desc": "全链路开发指南，开发任务必读",
+      "must_read_for_dev": true,
+      "links_to": [
+        "patterns/event-extension-guide",
+        "patterns/nsq-usage"
+      ]
+    },
+    {
+      "id": "patterns/event-extension-guide",
+      "label": "事件拓展指南",
+      "path": "curated/patterns/event-extension-guide.md",
+      "category": "pattern",
+      "role": "事件",
+      "desc": "事件处理三种模式：同步/异步/NSQ",
+      "links_to": [
+        "patterns/nsq-usage",
+        "projects/slp-go/09-event-capabilities"
+      ]
+    },
+    {
+      "id": "patterns/nsq-usage",
+      "label": "NSQ使用规范",
+      "path": "curated/patterns/nsq-usage.md",
+      "category": "pattern",
+      "role": "队列",
+      "desc": "NSQ发送/消费标准",
+      "links_to": []
+    },
+    {
+      "id": "patterns/cmd-module-standard",
+      "label": "CMD模块标准",
+      "path": "curated/patterns/cmd-module-standard.md",
+      "category": "pattern",
+      "role": "CMD",
+      "desc": "CMD模块结构",
+      "links_to": []
+    },
+    {
+      "id": "patterns/code-scale-standard",
+      "label": "代码规模标准",
+      "path": "curated/patterns/code-scale-standard.md",
+      "category": "pattern",
+      "role": "规模",
+      "desc": "函数<30行，文件<500行",
+      "links_to": []
+    },
+    {
+      "id": "patterns/architecture-layered-standard",
+      "label": "分层架构标准",
+      "path": "curated/patterns/architecture-layered-standard.md",
+      "category": "pattern",
+      "role": "架构",
+      "desc": "API→Service→DAO层次职责边界",
+      "links_to": [
+        "patterns/business-module-standard",
+        "patterns/business-code-example"
+      ]
+    },
+    {
+      "id": "patterns/business-module-standard",
+      "label": "业务模块标准",
+      "path": "curated/patterns/business-module-standard.md",
+      "category": "pattern",
+      "role": "模块",
+      "desc": "常量定义、Service组织规范",
+      "links_to": [
+        "patterns/code-scale-standard",
+        "patterns/event-extension-guide",
+        "patterns/cmd-module-standard"
+      ]
+    },
+    {
+      "id": "patterns/business-code-example",
+      "label": "业务代码示例",
+      "path": "curated/patterns/business-code-example.md",
+      "category": "pattern",
+      "role": "示例",
+      "desc": "完整业务模块代码示例",
+      "links_to": []
+    },
+    {
+      "id": "patterns/database-naming-conventions",
+      "label": "数据库命名",
+      "path": "curated/patterns/database-naming-conventions.md",
+      "category": "pattern",
+      "role": "命名",
+      "desc": "数据库命名规范",
+      "links_to": []
+    },
+    {
+      "id": "patterns/dev-to-dev-deployment",
+      "label": "部署流程",
+      "path": "curated/patterns/dev-to-dev-deployment.md",
+      "category": "pattern",
+      "role": "部署",
+      "desc": "开发到部署完整流程",
+      "links_to": [
+        "USER_GUIDE"
+      ]
+    },
+    {
+      "id": "patterns/project-learning-framework",
+      "label": "项目学习框架",
+      "path": "curated/patterns/project-learning-framework.md",
+      "category": "pattern",
+      "role": "学习",
+      "desc": "新项目学习方法论",
+      "links_to": [
+        "projects/slp-common-rpc/CORE_LEARNING",
+        "tools/slpctl-ci"
+      ]
+    },
+    {
+      "id": "tools/slpctl",
+      "label": "slpctl命令参考",
+      "path": "curated/tools/slpctl.md",
+      "category": "tool",
+      "role": "工具",
+      "desc": "完整命令参考",
+      "links_to": []
+    },
+    {
+      "id": "tools/slpctl-usage-guide",
+      "label": "slpctl使用指南",
+      "path": "curated/tools/slpctl-usage-guide.md",
+      "category": "tool",
+      "role": "指南",
+      "desc": "8步开发流程",
+      "must_read_for_dev": true,
+      "links_to": []
+    },
+    {
+      "id": "tools/gh-pr-analysis",
+      "label": "gh PR分析",
+      "path": "curated/tools/gh-pr-analysis.md",
+      "category": "tool",
+      "role": "PR",
+      "desc": "PR分析命令",
+      "links_to": []
+    },
+    {
+      "id": "projects/slp-go/01-structure",
+      "label": "slp-go项目结构",
+      "path": "curated/projects/slp-go/01-structure.md",
+      "category": "project",
+      "role": "结构",
+      "desc": "slp-go目录结构",
+      "project": "slp-go",
+      "links_to": [
+        "projects/slp-go/02-architecture",
+        "projects/slp-go/03-development"
+      ]
+    },
+    {
+      "id": "projects/slp-go/02-architecture",
+      "label": "slp-go架构",
+      "path": "curated/projects/slp-go/02-architecture.md",
+      "category": "project",
+      "role": "架构",
+      "desc": "分层架构详解",
+      "project": "slp-go",
+      "links_to": []
+    },
+    {
+      "id": "projects/slp-go/03-development",
+      "label": "slp-go开发流程",
+      "path": "curated/projects/slp-go/03-development.md",
+      "category": "project",
+      "role": "流程",
+      "desc": "开发步骤",
+      "project": "slp-go",
+      "links_to": []
+    },
+    {
+      "id": "projects/slp-go/04-api",
+      "label": "slp-go API模式",
+      "path": "curated/projects/slp-go/04-api.md",
+      "category": "project",
+      "role": "API",
+      "desc": "API层开发模式",
+      "project": "slp-go",
+      "links_to": [
+        "tools/slpctl"
+      ]
+    },
+    {
+      "id": "projects/slp-go/05-service",
+      "label": "slp-go Service模式",
+      "path": "curated/projects/slp-go/05-service.md",
+      "category": "project",
+      "role": "Service",
+      "desc": "Service层开发模式",
+      "project": "slp-go",
+      "links_to": []
+    },
+    {
+      "id": "projects/slp-go/06-dao",
+      "label": "slp-go DAO模式",
+      "path": "curated/projects/slp-go/06-dao.md",
+      "category": "project",
+      "role": "DAO",
+      "desc": "DAO层开发模式",
+      "project": "slp-go",
+      "links_to": [
+        "tools/slpctl"
+      ]
+    },
+    {
+      "id": "projects/slp-go/07-infra",
+      "label": "slp-go基础设施",
+      "path": "curated/projects/slp-go/07-infra.md",
+      "category": "project",
+      "role": "Infra",
+      "desc": "基础设施配置",
+      "project": "slp-go",
+      "links_to": []
+    },
+    {
+      "id": "projects/slp-go/08-business-369-recharge",
+      "label": "slp-go 369业务案例",
+      "path": "curated/projects/slp-go/08-business-369-recharge.md",
+      "category": "project",
+      "role": "案例",
+      "desc": "369观光团业务案例",
+      "project": "slp-go",
+      "links_to": [
+        "cross-projects/369-recharge/overview",
+        "patterns/cmd-module-standard",
+        "patterns/nsq-usage"
+      ]
+    },
+    {
+      "id": "projects/slp-go/09-event-capabilities",
+      "label": "slp-go事件能力",
+      "path": "curated/projects/slp-go/09-event-capabilities.md",
+      "category": "project",
+      "role": "事件",
+      "desc": "已支持的事件列表",
+      "project": "slp-go",
+      "links_to": [
+        "patterns/event-extension-guide"
+      ]
+    },
+    {
+      "id": "projects/slp-room/01-structure",
+      "label": "slp-room项目结构",
+      "path": "curated/projects/slp-room/01-structure.md",
+      "category": "project",
+      "role": "结构",
+      "desc": "slp-room目录结构",
+      "project": "slp-room",
+      "links_to": [
+        "projects/slp-room/02-architecture",
+        "projects/slp-room/01-event-capabilities"
+      ]
+    },
+    {
+      "id": "projects/slp-room/02-architecture",
+      "label": "slp-room架构",
+      "path": "curated/projects/slp-room/02-architecture.md",
+      "category": "project",
+      "role": "架构",
+      "desc": "分层架构详解",
+      "project": "slp-room",
+      "links_to": [
+        "projects/slp-room/01-structure"
+      ]
+    },
+    {
+      "id": "projects/slp-room/01-event-capabilities",
+      "label": "slp-room事件能力",
+      "path": "curated/projects/slp-room/01-event-capabilities.md",
+      "category": "project",
+      "role": "事件",
+      "desc": "已支持的事件列表",
+      "project": "slp-room",
+      "links_to": []
+    },
+    {
+      "id": "projects/slp-starship/01-structure",
+      "label": "slp-starship项目结构",
+      "path": "curated/projects/slp-starship/01-structure.md",
+      "category": "project",
+      "role": "结构",
+      "desc": "slp-starship目录结构",
+      "project": "slp-starship",
+      "links_to": [
+        "projects/slp-starship/01-event-capabilities",
+        "patterns/event-extension-guide"
+      ]
+    },
+    {
+      "id": "projects/slp-starship/01-event-capabilities",
+      "label": "slp-starship事件能力",
+      "path": "curated/projects/slp-starship/01-event-capabilities.md",
+      "category": "project",
+      "role": "事件",
+      "desc": "已支持的事件列表",
+      "project": "slp-starship",
+      "links_to": [
+        "patterns/event-extension-guide",
+        "patterns/nsq-usage"
+      ]
+    },
+    {
+      "id": "projects/slp-common-rpc/CORE_LEARNING",
+      "label": "slp-common-rpc学习",
+      "path": "curated/projects/slp-common-rpc/CORE_LEARNING.md",
+      "category": "project",
+      "role": "学习",
+      "desc": "项目核心学习路径",
+      "project": "slp-common-rpc",
+      "links_to": []
+    },
+    {
+      "id": "cross-projects/369-recharge/overview",
+      "label": "369观光团概览",
+      "path": "curated/cross-projects/369-recharge/overview.md",
+      "category": "cross-project",
+      "role": "概览",
+      "desc": "369元观光团业务",
+      "business": "369-recharge",
+      "links_to": [
+        "cross-projects/369-recharge/slp-room",
+        "projects/slp-go/08-business-369-recharge"
+      ]
+    },
+    {
+      "id": "cross-projects/369-recharge/slp-room",
+      "label": "369 slp-room实现",
+      "path": "curated/cross-projects/369-recharge/slp-room.md",
+      "category": "cross-project",
+      "role": "实现",
+      "desc": "slp-room中的实现",
+      "business": "369-recharge",
+      "links_to": []
+    },
+    {
+      "id": "cross-projects/big-brother/README-PASSCODE",
+      "label": "口令功能入口",
+      "path": "curated/cross-projects/big-brother/README-PASSCODE.md",
+      "category": "cross-project",
+      "role": "入口",
+      "desc": "口令创建/验证功能",
+      "business": "big-brother",
+      "links_to": [
+        "cross-projects/big-brother/passcode-requirement",
+        "cross-projects/big-brother/passcode-technical-design",
+        "cross-projects/big-brother/test-report",
+        "cross-projects/big-brother/pet-feature"
+      ]
+    },
+    {
+      "id": "cross-projects/big-brother/passcode-requirement",
+      "label": "口令需求",
+      "path": "curated/cross-projects/big-brother/passcode-requirement.md",
+      "category": "cross-project",
+      "role": "需求",
+      "desc": "口令功能需求文档",
+      "business": "big-brother",
+      "links_to": []
+    },
+    {
+      "id": "cross-projects/big-brother/passcode-technical-design",
+      "label": "口令技术设计",
+      "path": "curated/cross-projects/big-brother/passcode-technical-design.md",
+      "category": "cross-project",
+      "role": "设计",
+      "desc": "口令功能技术设计",
+      "business": "big-brother",
+      "links_to": [
+        "patterns/business-module-standard",
+        "patterns/business-code-example",
+        "cross-projects/big-brother/pet-feature"
+      ]
+    },
+    {
+      "id": "cross-projects/big-brother/test-report",
+      "label": "口令测试报告",
+      "path": "curated/cross-projects/big-brother/test-report.md",
+      "category": "cross-project",
+      "role": "测试",
+      "desc": "口令功能测试报告",
+      "business": "big-brother",
+      "links_to": []
+    },
+    {
+      "id": "cross-projects/big-brother/pet-feature",
+      "label": "宠物功能",
+      "path": "curated/cross-projects/big-brother/pet-feature.md",
+      "category": "cross-project",
+      "role": "功能",
+      "desc": "宠物相关功能",
+      "business": "big-brother",
+      "links_to": [
+        "projects/slp-room/01-structure",
+        "projects/slp-room/02-architecture",
+        "projects/slp-room/01-event-capabilities"
+      ]
+    },
+    {
+      "id": "cross-projects/prayer-activity/01-overview",
+      "label": "祈福活动概览",
+      "path": "curated/cross-projects/prayer-activity/01-overview.md",
+      "category": "cross-project",
+      "role": "概览",
+      "desc": "祈福抽奖活动",
+      "business": "prayer-activity",
+      "links_to": [
+        "cross-projects/prayer-activity/02-sql-config",
+        "cross-projects/prayer-activity/slp-starship"
+      ]
+    },
+    {
+      "id": "cross-projects/prayer-activity/slp-starship",
+      "label": "祈福 slp-starship实现",
+      "path": "curated/cross-projects/prayer-activity/slp-starship.md",
+      "category": "cross-project",
+      "role": "实现",
+      "desc": "slp-starship中的实现",
+      "business": "prayer-activity",
+      "links_to": []
+    },
+    {
+      "id": "cross-projects/fly-chess/overview",
+      "label": "飞行棋概览",
+      "path": "curated/cross-projects/fly-chess/overview.md",
+      "category": "cross-project",
+      "role": "概览",
+      "desc": "飞行棋游戏",
+      "business": "fly-chess",
+      "links_to": []
+    },
+    {
+      "id": "cross-projects/chatroom/room-type-development",
+      "label": "房型开发",
+      "path": "curated/cross-projects/chatroom/room-type-development.md",
+      "category": "cross-project",
+      "role": "开发",
+      "desc": "聊天室房型开发指南",
+      "business": "chatroom",
+      "links_to": []
+    },
+    {
+      "id": "cross-projects/chatroom/room-type-concept",
+      "label": "房型概念",
+      "path": "curated/cross-projects/chatroom/room-type-concept.md",
+      "category": "cross-project",
+      "role": "概念",
+      "desc": "房型概念说明",
+      "business": "chatroom",
+      "links_to": []
+    },
+    {
+      "id": "cross-projects/buye-payment/overview",
+      "label": "不夜支付概览",
+      "path": "curated/cross-projects/buye-payment/overview.md",
+      "category": "cross-project",
+      "role": "概览",
+      "desc": "支付系统",
+      "business": "buye-payment",
+      "links_to": []
+    },
+    {
+      "id": "cross-projects/gift-suit/gift-suit-feature",
+      "label": "礼包套装功能",
+      "path": "curated/cross-projects/gift-suit/gift-suit-feature.md",
+      "category": "cross-project",
+      "role": "功能",
+      "desc": "礼包套装功能",
+      "business": "gift-suit",
+      "links_to": []
+    },
+    {
+      "id": "cross-projects/decorate-commodity-use/overview",
+      "label": "装扮物品概览",
+      "path": "curated/cross-projects/decorate-commodity-use/overview.md",
+      "category": "cross-project",
+      "role": "概览",
+      "desc": "装扮使用功能",
+      "business": "decorate",
+      "links_to": [
+        "cross-projects/decorate-commodity-use/slp-php",
+        "cross-projects/decorate-commodity-use/slp-go"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "AGENTS",
+      "to": "CODING_STANDARDS",
+      "type": "必读"
+    },
+    {
+      "from": "AGENTS",
+      "to": "INDEX",
+      "type": "索引"
+    },
+    {
+      "from": "AGENTS",
+      "to": "USER_GUIDE",
+      "type": "导航"
+    },
+    {
+      "from": "CODING_STANDARDS",
+      "to": "USER_GUIDE",
+      "type": "参考"
+    },
+    {
+      "from": "CODING_STANDARDS",
+      "to": "AI_WORKFLOW",
+      "type": "流程"
+    },
+    {
+      "from": "CODING_STANDARDS",
+      "to": "tools/slpctl",
+      "type": "工具"
+    },
+    {
+      "from": "USER_GUIDE",
+      "to": "patterns/slp-business-development-standard",
+      "type": "核心规范"
+    },
+    {
+      "from": "USER_GUIDE",
+      "to": "patterns/event-extension-guide",
+      "type": "事件"
+    },
+    {
+      "from": "USER_GUIDE",
+      "to": "patterns/nsq-usage",
+      "type": "队列"
+    },
+    {
+      "from": "USER_GUIDE",
+      "to": "patterns/dev-to-dev-deployment",
+      "type": "部署"
+    },
+    {
+      "from": "USER_GUIDE",
+      "to": "projects/slp-go/01-structure",
+      "type": "项目"
+    },
+    {
+      "from": "USER_GUIDE",
+      "to": "projects/slp-room/01-structure",
+      "type": "项目"
+    },
+    {
+      "from": "USER_GUIDE",
+      "to": "projects/slp-starship/01-structure",
+      "type": "项目"
+    },
+    {
+      "from": "patterns/event-extension-guide",
+      "to": "patterns/nsq-usage",
+      "type": "依赖"
+    },
+    {
+      "from": "patterns/business-module-standard",
+      "to": "patterns/code-scale-standard",
+      "type": "约束"
+    },
+    {
+      "from": "patterns/business-module-standard",
+      "to": "patterns/event-extension-guide",
+      "type": "依赖"
+    },
+    {
+      "from": "projects/slp-go/04-api",
+      "to": "tools/slpctl",
+      "type": "工具"
+    },
+    {
+      "from": "projects/slp-go/06-dao",
+      "to": "tools/slpctl",
+      "type": "工具"
+    },
+    {
+      "from": "projects/slp-go/08-business-369-recharge",
+      "to": "cross-projects/369-recharge/overview",
+      "type": "业务"
+    },
+    {
+      "from": "projects/slp-go/08-business-369-recharge",
+      "to": "patterns/cmd-module-standard",
+      "type": "规范"
+    },
+    {
+      "from": "projects/slp-go/08-business-369-recharge",
+      "to": "patterns/nsq-usage",
+      "type": "规范"
+    },
+    {
+      "from": "projects/slp-starship/01-event-capabilities",
+      "to": "patterns/event-extension-guide",
+      "type": "规范"
+    },
+    {
+      "from": "cross-projects/big-brother/pet-feature",
+      "to": "projects/slp-room/01-structure",
+      "type": "项目"
+    },
+    {
+      "from": "cross-projects/big-brother/passcode-technical-design",
+      "to": "patterns/business-module-standard",
+      "type": "规范"
+    }
+  ],
+  "ai_usage_guide": {
+    "core_rules": {
+      "禁止手动写API": {
+        "wrong": "手写 handler/service/dao",
+        "correct": "slpctl code -api /go/slp/module/api -desc '描述'",
+        "reason": "工具自动生成骨架，你只填充业务逻辑"
+      },
+      "禁止循环IO": {
+        "wrong": "for { dao.Find(id) }",
+        "correct": "批量查询 + map组装",
+        "reason": "避免N+1查询，性能问题"
+      },
+      "禁止阻塞主goroutine": {
+        "wrong": "同步处理耗时操作（>100ms）",
+        "correct": "异步任务队列 / NSQ",
+        "reason": "主goroutine阻塞会导致请求堆积"
+      },
+      "禁止绕过事件总线": {
+        "wrong": "直接调用其他模块",
+        "correct": "发布事件解耦",
+        "reason": "模块间通信必须通过事件总线"
+      },
+      "禁止函数过大": {
+        "wrong": "Handler > 30行, Service > 100行",
+        "correct": "按功能拆分",
+        "reason": "大函数难以维护和测试"
+      }
+    },
+    "project_routes": {
+      "slp-go": "/go/slp/",
+      "slp-room": "/go/room/",
+      "slp-starship": "/go/starship/"
+    },
+    "dev_task": {
+      "must_read": [
+        "AGENTS",
+        "CODING_STANDARDS",
+        "patterns/slp-business-development-standard",
+        "tools/slpctl-usage-guide"
+      ],
+      "by_project": {
+        "slp-go": [
+          "projects/slp-go/01-structure",
+          "projects/slp-go/04-api"
+        ],
+        "slp-room": [
+          "projects/slp-room/01-structure",
+          "projects/slp-room/02-architecture"
+        ],
+        "slp-starship": [
+          "projects/slp-starship/01-structure",
+          "projects/slp-starship/01-event-capabilities"
+        ]
+      },
+      "by_task_type": {
+        "new_api": [
+          "tools/slpctl-usage-guide",
+          "projects/<project>/04-api"
+        ],
+        "new_event": [
+          "patterns/event-extension-guide",
+          "patterns/nsq-usage",
+          "projects/<project>/09-event-capabilities"
+        ],
+        "new_cmd": [
+          "patterns/cmd-module-standard"
+        ],
+        "cross_business": [
+          "cross-projects/<business>/overview",
+          "cross-projects/<business>/<project>"
+        ]
+      }
+    },
+    "doc_task": {
+      "must_read": [
+        "INDEX",
+        "DOCUMENT_LOCATION_RULES",
+        "AGENTS"
+      ],
+      "by_type": {
+        "project_knowledge": "knowledge/projects/<project>/",
+        "cross_project": "knowledge/cross-projects/<business>/",
+        "pattern": "knowledge/patterns/",
+        "tool": "knowledge/tools/"
+      }
+    },
+    "query_shortcuts": {
+      "核心禁令": "wiki/core/coding-standards.md",
+      "开发流程": "wiki/patterns/slp-business-development-standard.md",
+      "事件开发": "wiki/patterns/event-extension-guide.md",
+      "slpctl": "wiki/tools/slpctl-usage-guide.md",
+      "slp-go结构": "wiki/projects/slp-go/01-structure.md",
+      "slp-room结构": "wiki/projects/slp-room/01-structure.md",
+      "369业务": "wiki/cross-projects/369-recharge/overview.md",
+      "口令功能": "wiki/cross-projects/big-brother/README-PASSCODE.md"
+    }
+  },
+  "structure": {
+    "wiki": {
+      "desc": "AI编译后的知识（精简结构化）",
+      "ai_reads": true
+    }
+  }
+}

@@ -1,0 +1,134 @@
+# edges.jsonl - 知识图谱关系存储
+# 格式: JSONL (每行一个 JSON 对象)
+# 创建时间: 2026-04-28T23:44:13.487673
+#
+{"from": "AGENTS", "to": "CODING_STANDARDS", "type": "must_read", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488343"}
+{"from": "AGENTS", "to": "INDEX", "type": "index", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488357"}
+{"from": "AGENTS", "to": "USER_GUIDE", "type": "navigate", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488364"}
+{"from": "CODING_STANDARDS", "to": "USER_GUIDE", "type": "reference", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488369"}
+{"from": "CODING_STANDARDS", "to": "AI_WORKFLOW", "type": "process", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488374"}
+{"from": "CODING_STANDARDS", "to": "tools/slpctl", "type": "tool", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488378"}
+{"from": "USER_GUIDE", "to": "patterns/slp-business-development-standard", "type": "core_standard", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488383"}
+{"from": "USER_GUIDE", "to": "patterns/event-extension-guide", "type": "event", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488388"}
+{"from": "USER_GUIDE", "to": "patterns/nsq-usage", "type": "queue", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488393"}
+{"from": "USER_GUIDE", "to": "patterns/dev-to-dev-deployment", "type": "deploy", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488397"}
+{"from": "USER_GUIDE", "to": "projects/slp-go/01-structure", "type": "project", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488402"}
+{"from": "USER_GUIDE", "to": "projects/slp-room/01-structure", "type": "project", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488406"}
+{"from": "USER_GUIDE", "to": "projects/slp-starship/01-structure", "type": "project", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488410"}
+{"from": "patterns/event-extension-guide", "to": "patterns/nsq-usage", "type": "depends_on", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488415"}
+{"from": "patterns/business-module-standard", "to": "patterns/code-scale-standard", "type": "constrains", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488419"}
+{"from": "patterns/business-module-standard", "to": "patterns/event-extension-guide", "type": "depends_on", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488424"}
+{"from": "projects/slp-go/04-api", "to": "tools/slpctl", "type": "tool", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488428"}
+{"from": "projects/slp-go/06-dao", "to": "tools/slpctl", "type": "tool", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488433"}
+{"from": "projects/slp-go/08-business-369-recharge", "to": "cross-projects/369-recharge/overview", "type": "business", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488437"}
+{"from": "projects/slp-go/08-business-369-recharge", "to": "patterns/cmd-module-standard", "type": "standard", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488442"}
+{"from": "projects/slp-go/08-business-369-recharge", "to": "patterns/nsq-usage", "type": "standard", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488446"}
+{"from": "projects/slp-starship/01-event-capabilities", "to": "patterns/event-extension-guide", "type": "standard", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488450"}
+{"from": "cross-projects/big-brother/pet-feature", "to": "projects/slp-room/01-structure", "type": "project", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488455"}
+{"from": "cross-projects/big-brother/passcode-technical-design", "to": "patterns/business-module-standard", "type": "standard", "weight": 1.0, "source": "migrated", "created": "2026-04-28T23:44:13.488459"}
+{"from": "QUICK_REFERENCE", "to": "CODING_STANDARDS", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262493"}
+{"from": "CODING_STANDARDS", "to": "QUICK_REFERENCE", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262499"}
+{"from": "QUICK_REFERENCE", "to": "USER_GUIDE", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262500"}
+{"from": "USER_GUIDE", "to": "QUICK_REFERENCE", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262502"}
+{"from": "QUICK_REFERENCE", "to": "AI_WORKFLOW", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262503"}
+{"from": "AI_WORKFLOW", "to": "QUICK_REFERENCE", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262504"}
+{"from": "QUICK_REFERENCE", "to": "patterns/event-extension-guide", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262505"}
+{"from": "patterns/event-extension-guide", "to": "QUICK_REFERENCE", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262506"}
+{"from": "README", "to": "AGENTS", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262507"}
+{"from": "AGENTS", "to": "README", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262508"}
+{"from": "README", "to": "INDEX", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262509"}
+{"from": "INDEX", "to": "README", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262510"}
+{"from": "DOCUMENT_LOCATION_RULES", "to": "INDEX", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262511"}
+{"from": "INDEX", "to": "DOCUMENT_LOCATION_RULES", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262512"}
+{"from": "DOCUMENT_LOCATION_RULES", "to": "USER_GUIDE", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262513"}
+{"from": "USER_GUIDE", "to": "DOCUMENT_LOCATION_RULES", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262514"}
+{"from": "patterns/architecture-layered-standard", "to": "patterns/business-module-standard", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262515"}
+{"from": "patterns/business-module-standard", "to": "patterns/architecture-layered-standard", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262516"}
+{"from": "patterns/architecture-layered-standard", "to": "patterns/code-scale-standard", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262517"}
+{"from": "patterns/code-scale-standard", "to": "patterns/architecture-layered-standard", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262518"}
+{"from": "patterns/business-code-example", "to": "patterns/business-module-standard", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262519"}
+{"from": "patterns/business-module-standard", "to": "patterns/business-code-example", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262520"}
+{"from": "patterns/business-code-example", "to": "patterns/event-extension-guide", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262521"}
+{"from": "patterns/event-extension-guide", "to": "patterns/business-code-example", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262522"}
+{"from": "patterns/database-naming-conventions", "to": "patterns/business-module-standard", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262523"}
+{"from": "patterns/business-module-standard", "to": "patterns/database-naming-conventions", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262524"}
+{"from": "patterns/project-learning-framework", "to": "tools/slpctl-usage-guide", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262525"}
+{"from": "tools/slpctl-usage-guide", "to": "patterns/project-learning-framework", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262528"}
+{"from": "tools/slpctl-usage-guide", "to": "CODING_STANDARDS", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262529"}
+{"from": "CODING_STANDARDS", "to": "tools/slpctl-usage-guide", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262530"}
+{"from": "tools/slpctl-usage-guide", "to": "patterns/slp-business-development-standard", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262531"}
+{"from": "patterns/slp-business-development-standard", "to": "tools/slpctl-usage-guide", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262532"}
+{"from": "tools/slpctl-usage-guide", "to": "projects/slp-go/01-structure", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262533"}
+{"from": "projects/slp-go/01-structure", "to": "tools/slpctl-usage-guide", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262534"}
+{"from": "tools/gh-pr-analysis", "to": "USER_GUIDE", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262535"}
+{"from": "USER_GUIDE", "to": "tools/gh-pr-analysis", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262536"}
+{"from": "projects/slp-go/02-architecture", "to": "projects/slp-go/01-structure", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262537"}
+{"from": "projects/slp-go/01-structure", "to": "projects/slp-go/02-architecture", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262538"}
+{"from": "projects/slp-go/02-architecture", "to": "patterns/architecture-layered-standard", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262539"}
+{"from": "patterns/architecture-layered-standard", "to": "projects/slp-go/02-architecture", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262540"}
+{"from": "projects/slp-go/03-development", "to": "projects/slp-go/01-structure", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262541"}
+{"from": "projects/slp-go/01-structure", "to": "projects/slp-go/03-development", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262542"}
+{"from": "projects/slp-go/03-development", "to": "patterns/slp-business-development-standard", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262543"}
+{"from": "patterns/slp-business-development-standard", "to": "projects/slp-go/03-development", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262544"}
+{"from": "projects/slp-go/05-service", "to": "projects/slp-go/01-structure", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262545"}
+{"from": "projects/slp-go/01-structure", "to": "projects/slp-go/05-service", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262546"}
+{"from": "projects/slp-go/05-service", "to": "patterns/business-module-standard", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262547"}
+{"from": "patterns/business-module-standard", "to": "projects/slp-go/05-service", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262548"}
+{"from": "projects/slp-go/07-infra", "to": "projects/slp-go/01-structure", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262549"}
+{"from": "projects/slp-go/01-structure", "to": "projects/slp-go/07-infra", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262550"}
+{"from": "projects/slp-go/09-event-capabilities", "to": "patterns/event-extension-guide", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262551"}
+{"from": "patterns/event-extension-guide", "to": "projects/slp-go/09-event-capabilities", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262552"}
+{"from": "projects/slp-go/09-event-capabilities", "to": "patterns/nsq-usage", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262553"}
+{"from": "patterns/nsq-usage", "to": "projects/slp-go/09-event-capabilities", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262554"}
+{"from": "projects/slp-room/02-architecture", "to": "projects/slp-room/01-structure", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262555"}
+{"from": "projects/slp-room/01-structure", "to": "projects/slp-room/02-architecture", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262556"}
+{"from": "projects/slp-room/02-architecture", "to": "patterns/architecture-layered-standard", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262557"}
+{"from": "patterns/architecture-layered-standard", "to": "projects/slp-room/02-architecture", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262558"}
+{"from": "projects/slp-room/01-event-capabilities", "to": "patterns/event-extension-guide", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262559"}
+{"from": "patterns/event-extension-guide", "to": "projects/slp-room/01-event-capabilities", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262560"}
+{"from": "projects/slp-room/01-event-capabilities", "to": "projects/slp-room/01-structure", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262561"}
+{"from": "projects/slp-room/01-structure", "to": "projects/slp-room/01-event-capabilities", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262563"}
+{"from": "projects/slp-common-rpc/CORE_LEARNING", "to": "patterns/project-learning-framework", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262564"}
+{"from": "patterns/project-learning-framework", "to": "projects/slp-common-rpc/CORE_LEARNING", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262565"}
+{"from": "projects/slp-common-rpc/CORE_LEARNING", "to": "projects/slp-go/01-structure", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262566"}
+{"from": "projects/slp-go/01-structure", "to": "projects/slp-common-rpc/CORE_LEARNING", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262567"}
+{"from": "cross-projects/369-recharge/slp-room", "to": "cross-projects/369-recharge/overview", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262568"}
+{"from": "cross-projects/369-recharge/overview", "to": "cross-projects/369-recharge/slp-room", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262569"}
+{"from": "cross-projects/369-recharge/slp-room", "to": "projects/slp-room/01-structure", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262570"}
+{"from": "projects/slp-room/01-structure", "to": "cross-projects/369-recharge/slp-room", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262571"}
+{"from": "cross-projects/big-brother/README-PASSCODE", "to": "cross-projects/big-brother/passcode-requirement", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262572"}
+{"from": "cross-projects/big-brother/passcode-requirement", "to": "cross-projects/big-brother/README-PASSCODE", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262573"}
+{"from": "cross-projects/big-brother/README-PASSCODE", "to": "cross-projects/big-brother/passcode-technical-design", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262574"}
+{"from": "cross-projects/big-brother/passcode-technical-design", "to": "cross-projects/big-brother/README-PASSCODE", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262575"}
+{"from": "cross-projects/big-brother/README-PASSCODE", "to": "cross-projects/big-brother/pet-feature", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262640"}
+{"from": "cross-projects/big-brother/pet-feature", "to": "cross-projects/big-brother/README-PASSCODE", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262641"}
+{"from": "cross-projects/big-brother/passcode-requirement", "to": "cross-projects/big-brother/README-PASSCODE", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262643"}
+{"from": "cross-projects/big-brother/README-PASSCODE", "to": "cross-projects/big-brother/passcode-requirement", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262644"}
+{"from": "cross-projects/big-brother/test-report", "to": "cross-projects/big-brother/passcode-technical-design", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262645"}
+{"from": "cross-projects/big-brother/passcode-technical-design", "to": "cross-projects/big-brother/test-report", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262646"}
+{"from": "cross-projects/prayer-activity/01-overview", "to": "cross-projects/prayer-activity/slp-starship", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262647"}
+{"from": "cross-projects/prayer-activity/slp-starship", "to": "cross-projects/prayer-activity/01-overview", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262648"}
+{"from": "cross-projects/prayer-activity/01-overview", "to": "projects/slp-starship/01-structure", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262649"}
+{"from": "projects/slp-starship/01-structure", "to": "cross-projects/prayer-activity/01-overview", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262650"}
+{"from": "cross-projects/prayer-activity/slp-starship", "to": "cross-projects/prayer-activity/01-overview", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262651"}
+{"from": "cross-projects/prayer-activity/01-overview", "to": "cross-projects/prayer-activity/slp-starship", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262652"}
+{"from": "cross-projects/chatroom/room-type-development", "to": "DOCUMENT_LOCATION_RULES", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262653"}
+{"from": "DOCUMENT_LOCATION_RULES", "to": "cross-projects/chatroom/room-type-development", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262654"}
+{"from": "cross-projects/chatroom/room-type-concept", "to": "cross-projects/chatroom/room-type-development", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262655"}
+{"from": "cross-projects/chatroom/room-type-development", "to": "cross-projects/chatroom/room-type-concept", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262657"}
+{"from": "cross-projects/decorate-commodity-use/overview", "to": "cross-projects/decorate-commodity-use/slp-go", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262658"}
+{"from": "cross-projects/decorate-commodity-use/slp-go", "to": "cross-projects/decorate-commodity-use/overview", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262659"}
+{"from": "cross-projects/decorate-commodity-use/overview", "to": "cross-projects/decorate-commodity-use/slp-php", "type": "auto_linked", "weight": 1.0, "source": "fix_script", "reason": "预定义关系", "created": "2026-04-29T00:09:24.262660"}
+{"from": "cross-projects/decorate-commodity-use/slp-php", "to": "cross-projects/decorate-commodity-use/overview", "type": "referenced_by", "weight": 0.5, "source": "fix_script", "reason": "反向引用", "created": "2026-04-29T00:09:24.262661"}
+{"from": "CODING_STANDARDS", "to": "tools/slpctl-usage-guide", "type": "llm_discovered", "weight": 2.0, "source": "compile_llm", "reason": "禁令引用工具详解", "created": "2026-04-29T16:30:00"}
+{"from": "CODING_STANDARDS", "to": "patterns/slp-business-development-standard", "type": "llm_discovered", "weight": 2.0, "source": "compile_llm", "reason": "禁令引用业务规范", "created": "2026-04-29T16:30:00"}
+{"from": "CODING_STANDARDS", "to": "patterns/code-scale-standard", "type": "llm_discovered", "weight": 1.5, "source": "compile_llm", "reason": "禁令引用规模标准", "created": "2026-04-29T16:30:00"}
+{"from": "USER_GUIDE", "to": "tools/slpctl-usage-guide", "type": "llm_discovered", "weight": 2.0, "source": "compile_llm", "reason": "导航引用工具详解", "created": "2026-04-29T16:30:00"}
+{"from": "USER_GUIDE", "to": "projects/slp-go/01-structure", "type": "llm_discovered", "weight": 1.5, "source": "compile_llm", "reason": "导航引用项目结构", "created": "2026-04-29T16:30:00"}
+{"from": "USER_GUIDE", "to": "projects/slp-room/01-structure", "type": "llm_discovered", "weight": 1.5, "source": "compile_llm", "reason": "导航引用项目结构", "created": "2026-04-29T16:30:00"}
+{"from": "USER_GUIDE", "to": "projects/slp-starship/01-structure", "type": "llm_discovered", "weight": 1.5, "source": "compile_llm", "reason": "导航引用项目结构", "created": "2026-04-29T16:30:00"}
+{"from": "patterns/event-extension-guide", "to": "patterns/cmd-module-standard", "type": "llm_discovered", "weight": 2.0, "source": "compile_llm", "reason": "事件指南引用CMD标准", "created": "2026-04-29T16:30:00"}
+{"from": "patterns/event-extension-guide", "to": "projects/slp-go/09-event-capabilities", "type": "llm_discovered", "weight": 1.5, "source": "compile_llm", "reason": "事件指南引用事件清单", "created": "2026-04-29T16:30:00"}
+{"from": "patterns/cache-usage-guide", "to": "patterns/nsq-usage", "type": "llm_discovered", "weight": 1.5, "source": "compile_llm", "reason": "缓存规范引用队列规范", "created": "2026-04-29T16:45:00"}
+{"from": "patterns/cache-usage-guide", "to": "CODING_STANDARDS", "type": "llm_discovered", "weight": 2.0, "source": "compile_llm", "reason": "缓存规范引用核心禁令", "created": "2026-04-29T16:45:00"}
+{"from": "patterns/cache-usage-guide", "to": "patterns/business-module-standard", "type": "llm_discovered", "weight": 1.5, "source": "compile_llm", "reason": "缓存规范引用模块标准", "created": "2026-04-29T16:45:00"}
