@@ -48,14 +48,16 @@ curl -X POST '{{hostname}}/go/starship/farm/fishpondUpLevel' \
   -H 'user-token: {{user-token}}'
 ```
 
-## 池塘深度升级
+## 鱼塘撒饵首页
 
-> Postman 路径: `starship/鱼塘/池塘深度升级`
+> Postman 路径: `starship/鱼塘/鱼塘撒饵首页`
 
 ```bash
 curl -X POST '{{hostname}}/go/starship/farm/castBaitHome' \
   -H 'user-token: {{user-token}}'
 ```
+
+**返回**: 各水层鱼饵列表，包含鱼饵信息（bait_type, bait_prop_stock_num, 价格档位等）
 
 ## 祈福抽奖活动主页，返回活动信息、用户进度、心愿值、价格配置
 

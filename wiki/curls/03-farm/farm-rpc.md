@@ -115,11 +115,13 @@ curl -X POST '{{rpc-hostname}}/rpc/Farm.Busi/ConfigFarmFishPondLevel' \
 > Postman 路径: `starship/鱼塘/鱼塘鱼饵`
 
 ```bash
-curl -X POST '{{rpc-hostname}}/rpc/Farm.Busi/ConfigFarmFishPondBait' \
+curl -X POST 'http://114.55.3.96/rpc/Farm.Busi/ConfigFarmFishPondBaitV2' \
   -H 'Content-Type: application/rpcx' \
   -H 'X-RPCX-SerializeType: 1' \
-  -d '{}'
+  -d '{"app_id": 66}'
 ```
+
+**注意**: RPC 方法名是 `ConfigFarmFishPondBaitV2`（带 V2 后缀），不是 `ConfigFarmFishPondBait`。
 
 ## 农场装扮信息rpc
 

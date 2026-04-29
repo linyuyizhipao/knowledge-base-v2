@@ -4,7 +4,8 @@ label: 公屏消息流转深度分析
 source: curated/cross-projects/chatroom/room-chat-flow-analysis.md
 business: chatroom
 compiled: 2026-04-25
-links: []
+links:
+  - slp-room-structure
 ---
 
 # 公屏消息流转深度分析
