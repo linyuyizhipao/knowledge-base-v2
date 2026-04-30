@@ -4,7 +4,7 @@ label: AI 新需求开发流程（7阶段）
 source: curated/AI_WORKFLOW.md
 role: workflow
 compiled: 2026-04-30
-source_hash: 285d3865644b580a
+source_hash: 86e283f671fed413492ba9736502adf471cc3e27ea193e4f6c00d2d1a664cf5e
 tags:
   - workflow
   - development
@@ -13,6 +13,7 @@ tags:
   - slpctl能力前置
   - PR
   - master
+  - git-branch-enforcement
 links:
   - coding-standards
   - slpctl-usage-guide
@@ -27,7 +28,7 @@ links:
 ## 流程概览（7 阶段）
 
 ```
-阶段 0：创建功能分支 → 从 master 拉取 / 禁止直接在 master 开发
+阶段 0：创建功能分支（强制检查）→ 从 master 拉取 / 禁止直接在 master 开发
     ↓
 阶段 1：需求分析 → 确定需求类型（API/事件/CMD/DB）
     ↓
@@ -44,16 +45,34 @@ links:
 
 ## 步骤详解
 
-### 步骤 0：创建功能分支
+### 步骤 0：创建功能分支（强制检查）
+
+**任务**: 确认或创建功能分支，禁止在 master 上直接开发  
+**强制要求**: **必须从最新的 master 创建分支，禁止从 dev 或其他分支创建**
 
 **判断逻辑**：
 
 ```
 用户是否指定了功能分支？
-  ├─ 是 → 切换到该分支（git checkout <分支名> && git pull）
+  ├─ 是 → 检查分支来源（见下），然后切换并获取最新代码
   └─ 否 → 搜索相关分支（git branch -a | grep hu/）
-          ├─ 找到已有分支 → 询问用户是否使用
-          └─ 无相关分支 → 从 master 创建新分支
+          ├─ 找到已有分支 → 询问用户是否使用（必须确认基于 master）
+          └─ 无相关分支 → 强制从 master 创建新分支
+```
+
+**分支来源强制检查**（任何情况创建分支前必须执行）：
+```bash
+# 1. 确保远程 master 是最新的
+git fetch origin master
+
+# 2. 检查远程 master 的最新提交
+echo "Remote master HEAD: $(git log -1 origin/master --oneline)"
+
+# 3. 如果未基于最新 master，终止流程并报错
+git merge-base --is-ancestor origin/master HEAD || \
+  (echo "❌ 错误：当前分支不是基于最新 master！" && \
+   echo "请先：git fetch origin master && git rebase origin/master" && \
+   exit 1)
 ```
 
 **创建新分支流程**：
@@ -67,6 +86,7 @@ git push -u origin hu/<需求名称>
 **⚠️ 禁令**：
 - ❌ 禁止在 master 分支直接开发 — 必须从 master 创建功能分支
 - ❌ 禁止在功能分支以外的分支开发 — 所有改动在功能分支完成
+- ❌ 禁止从 dev 创建功能分支 — 必须从 master 开始
 - PR 目标分支为 master — 从 master 拉分支，开发完 PR 回 master
 
 ### 步骤 1：需求分析
@@ -146,7 +166,7 @@ slpctl ci -w
 ## 重要提醒
 
 **开发前必须**：
-1. 执行步骤 0（创建功能分支）
+1. 执行步骤 0（创建功能分支）- **强制检查分支来源**
 2. 执行步骤 2（知识检索）
 3. 执行步骤 3（slpctl 能力前置查询）
 

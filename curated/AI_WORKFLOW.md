@@ -55,18 +55,34 @@
 
 ## 📋 步骤详解
 
-### 步骤 0：创建功能分支
+### 步骤 0：创建功能分支（强制检查）
 
-**任务**: 确认或创建功能分支，禁止在 master 上直接开发
+**任务**: 确认或创建功能分支，禁止在 master 上直接开发  
+**强制要求**: **必须从最新的 master 创建分支，禁止从 dev 或其他分支创建**
 
 **判断逻辑**:
 
 ```
 用户是否指定了功能分支？
-  ├─ 是 → 切换到该分支（git checkout <分支名> && git pull）
+  ├─ 是 → 检查分支来源（见下），然后切换并获取最新代码
   └─ 否 → 搜索相关分支（git branch -a | grep hu/）
-          ├─ 找到已有分支 → 询问用户是否使用
-          └─ 无相关分支 → 从 master 创建新分支
+          ├─ 找到已有分支 → 询问用户是否使用（必须确认基于 master）
+          └─ 无相关分支 → 强制从 master 创建新分支
+```
+
+**分支来源强制检查**（任何情况创建分支前必须执行）：
+```bash
+# 1. 确保远程 master 是最新的
+git fetch origin master
+
+# 2. 检查远程 master 的最新提交
+echo "Remote master HEAD: $(git log -1 origin/master --oneline)"
+
+# 3. 如果未基于最新 master，终止流程并报错
+git merge-base --is-ancestor origin/master HEAD || \
+  (echo "❌ 错误：当前分支不是基于最新 master！" && \
+   echo "请先：git fetch origin master && git rebase origin/master" && \
+   exit 1)
 ```
 
 **创建新分支流程**:

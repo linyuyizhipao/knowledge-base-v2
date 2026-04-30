@@ -1,7 +1,7 @@
 {
   "name": "SLP 知识库",
   "version": "3.0",
-  "updated": "2026-04-28T18:30",
+  "updated": "2026-04-30T18:30",
   "compiled_note": "所有文件编译到 wiki/ 下，AI 通过 nodes_index 查找 wiki/ 路径",
   "shortcuts": {
     "核心禁令": "wiki/core/coding-standards.md",
@@ -15,6 +15,8 @@
     "slp-common-rpc": "wiki/projects/slp-common-rpc/CORE_LEARNING.md",
     "369业务": "wiki/cross-projects/369-recharge-overview.md",
     "口令功能": "wiki/cross-projects/passcode-readme.md",
+    "靓号搜索": "wiki/projects/slp-go/11-pretty-id-search.md",
+    "搜索系统": "wiki/projects/slp-go/11-pretty-id-search.md",
     "萌新广场隔离": "wiki/projects/slp-go/10-katouch-appid-isolation.md",
     "curl总览": "wiki/curls/README.md",
     "curl用户档案": "wiki/curls/01-user/profile-growth.md",

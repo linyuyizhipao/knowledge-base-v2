@@ -2,10 +2,11 @@
 
 > 所有代码必须遵循的规范
 > 
-> **⚠️ 重要**: 开始编码前，必须先阅读：
-> - [`knowledge/USER_GUIDE.md`](./knowledge/USER_GUIDE.md) - 场景 2:新需求开发
-> - [`knowledge/tools/slpctl.md`](./knowledge/tools/slpctl.md) - 工具使用
-> - [`AI_WORKFLOW.md`](./AI_WORKFLOW.md) - 5 阶段开发流程
+> **🚨 核心红线：开始任何编码任务前，必须先执行"步骤 0：创建功能分支"**
+> -严禁在 dev 分支开发
+> -严禁直接在 master 开发
+> -严禁从 dev 创建功能分支
+> -必须从最新 master 创建功能分支
 
 ## ⚡ slpctl 生成的代码能力（编码前先了解）
 
@@ -145,6 +146,27 @@ func (s *service) Process(ctx context.Context, req *Request) (*Response, error) 
 ### 7. 消息队列选型（以现状为准）
 
 当前仍以 NSQ 为主，新需求默认沿用项目既有队列与消费模型；如需引入 Kafka，必须在需求/PR 中说明原因与收益，并补齐对应的监控、告警与回滚方案。
+
+### 8. 分支强制约束（红线禁令）
+
+**所有新需求开发必须遵守**：
+1. **禁止在 dev 分支开发** - dev 只用于合入，不作为开发分支
+2. **禁止在 master 分支直接开发** - 必须从 master 创建功能分支
+3. **禁止从 dev 创建功能分支** - 功能分支必须从 master 创建
+4. **禁止跳过步骤 0** - 开始任何 coding 前必须先执行"步骤 0：创建功能分支"
+
+**强制检查命令**（AI 启动新需求时必须执行）：
+```bash
+# 检查当前是否在 master
+git rev-parse --abbrev-ref HEAD | grep -q master || (echo "❌ 错误：必须在 master 分支创建功能分支" && exit 1)
+
+# 检查 master 是否最新
+git fetch origin master >/dev/null 2>&1
+git merge-base --is-ancestor origin/master HEAD || (echo "❌ 错误：master 不是最新的，请先 git pull origin master" && exit 1)
+
+# 检查当前是否有未提交的修改
+git diff --quiet || (echo "❌ 错误：当前有未提交的修改，请先 stash 或 commit" && exit 1)
+```
 
 ---
 

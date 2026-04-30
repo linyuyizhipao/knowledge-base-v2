@@ -1,17 +1,17 @@
 ---
-id: CODING_STANDARDS
+id: coding-standards
 label: 核心禁令
 type: standard
 source: curated/CODING_STANDARDS.md
 sources: [curated/CODING_STANDARDS.md]
 role: 禁令
-compiled: 2026-04-29
-source_hash: cf21ce52bdbfda91520888a55e491c1a
-tags: [禁令, 规范, slpctl, IO, goroutine, 事件总线]
+compiled: 2026-04-30
+source_hash: bd9dfa510bc6e622e1b9765b687b5172876d7375763dfa8fa029db6f2220eb30
+tags: [禁令, 规范, slpctl, IO, goroutine, 事件总线, git-branch]
 links_to:
   - USER_GUIDE
   - tools/slpctl-usage-guide
-  - patterns/slp-business-development-standard
+  - ai-workflow
   - patterns/code-scale-standard
   - patterns/nsq-usage
   - patterns/event-extension-guide
@@ -19,60 +19,48 @@ links_to:
 
 # 核心禁令
 
-> 所有代码必须遵循的规范，开始编码前必读
+> 所有代码必须遵循的规范
+>
+> **🚨 核心红线：开始任何编码任务前，必须先执行"步骤 0：创建功能分支"**
+> - 严禁在 dev 分支开发
+> - 严禁直接在 master 开发
+> - 严禁从 dev 创建功能分支
+> - 必须从最新 master 创建功能分支
 
-## ⚡ slpctl 生成能力
+## ⚡ slpctl 生成的代码能力（编码前先了解）
 
-| 命令 | 生成内容 | AI 需做的 |
-|------|---------|----------|
-| `slpctl code -api /go/slp/<service>/<action>` | Handler + Service + DAO + Router | **只填充 Service 业务逻辑** |
-| `slpctl gen -t <表名>` | DAO CRUD + Protobuf 实体 | 不需要改，DB 变更时重新生成 |
+**不要只记住"禁止什么"，先了解 slpctl 为你生成了什么**：
 
-**优先使用原因**: 一致性、完整性、可维护、规范化
+### slpctl code（API 骨架生成）
 
-## ⚠️ 7 条核心禁令
-
-| # | 禁令 | 正确做法 | 原因 |
-|---|------|----------|------|
-| 1 | 手动写 API | `slpctl code -api` | 工具生成骨架 |
-| 2 | 循环 IO | 批量查询 + map | 避免 N+1 |
-| 3 | 阻塞主 goroutine | 异步队列 / NSQ | 防请求堆积 |
-| 4 | 绕过事件总线 | `eventBus.Publish()` | 模块解耦 |
-| 5 | 函数过大 | Handler≤30行, Service≤100行 | 可维护性 |
-| 6 | 不缓存的连表查询 | 使用缓存层 | 性能 |
-| 7 | 消息队列默认 NSQ | 说明原因才用 Kafka | 保持一致 |
-
-## 📝 代码组织模板
-
-```go
-// 简单行为(<200行): 一个大写方法
-func GetUserProfile(ctx, uid) (*pb.UserProfile, error)
-
-// 复杂行为(>200行): 大写入口 + 小写实现
-func (h *Handler) Process() error {  // 唯一入口
-    h.loadData()    // IO集中
-    h.checkEnergy() // 纯逻辑
-    h.updateDB()    // 写入
-}
+```bash
+slpctl code -api /go/slp/<service>/<action> -desc "描述" -project ./<项目>
 ```
 
-## ✅ 编码检查清单
+**生成后自动拥有**：
 
-- [ ] API 用 `slpctl code`
-- [ ] 表用 `slpctl gen`
-- [ ] 无循环 IO
-- [ ] 耗时操作异步
-- [ ] 事件总线通信
-- [ ] Handler≤30, Service≤100
-- [ ] 遍历表用 `TableLoopHandle`
+| 生成的内容 | AI 需要做的 |
+|-----------|------------|
+| `api/handler/` — Handler 文件（参数解析 + 调用 Service + 返回） | 不需要改，只注册路由 |
+| `api/service/` — Service 接口定义 + 实现骨架 | **填充业务逻辑**，这是你唯一需要写代码的地方 |
+| `api/dao/` — DAO 接口定义 | 不需要改，接口已定义好 |
+| `api/router/` — 路由注册 | 不需要改，工具已自动注册 |
 
-## 相关知识
+**流程**: 先生成骨架 → 在 Service 中填充业务逻辑 → 完成。**不要跳过生成步骤直接手写任何 API 相关代码**。
 
-- [[USER_GUIDE]] - 使用指南
-- [[tools/slpctl-usage-guide]] - slpctl详解
-- [[patterns/slp-business-development-standard]] - 业务开发规范
-- [[patterns/event-extension-guide]] - 事件开发指南
-- [[patterns/nsq-usage]] - NSQ使用规范
+### slpctl gen（数据库表代码生成）
+
+```bash
+slpctl gen -t <表名> -d <数据库>
+```
+
+**生成后自动拥有**：
+
+| 生成的内容 | 说明 |
+|-----------|------|
+| `app/dao/internal/*.go` — DAO 实现（CRUD、批量查询、分页） | 包含 `Find`、`FindBatch`、`Where`、`All` 等方法 |
+| `app/pb/entity_*.pb.go` — 实体定义（Protobuf） | 与数据库表结构一一对应 |
+| `proto/entity_*.proto` — Protobuf 定义 | 用于 RPC 通信和序列化 |
 
 **流程**: DB 字段变更时 → 先 `slpctl gen -t <表名>` 重新生成 → 使用新生成的 DAO 方法写业务逻辑。**不要手动编辑 DAO/Model 文件，下次 gen 会被覆盖**。
 
@@ -178,6 +166,29 @@ func (s *service) Process(ctx context.Context, req *Request) (*Response, error) 
 
 当前仍以 NSQ 为主，新需求默认沿用项目既有队列与消费模型；如需引入 Kafka，必须在需求/PR 中说明原因与收益，并补齐对应的监控、告警与回滚方案。
 
+### 8. 分支强制约束（红线禁令）
+
+**所有新需求开发必须遵守**：
+
+1. **禁止在 dev 分支开发** - dev 只用于合入，不作为开发分支
+2. **禁止在 master 分支直接开发** - 必须从 master 创建功能分支
+3. **禁止从 dev 创建功能分支** - 功能分支必须从 master 创建
+4. **禁止跳过步骤 0** - 开始任何 coding 前必须先执行"步骤 0：创建功能分支"
+
+**强制检查命令**（AI 启动新需求时必须执行）：
+
+```bash
+# 检查当前是否在 master
+git rev-parse --abbrev-ref HEAD | grep -q master || (echo "❌ 错误：必须在 master 分支创建功能分支" && exit 1)
+
+# 检查 master 是否最新
+git fetch origin master >/dev/null 2>&1
+git merge-base --is-ancestor origin/master HEAD || (echo "❌ 错误：master 不是最新的，请先 git pull origin master" && exit 1)
+
+# 检查当前是否有未提交的修改
+git diff --quiet || (echo "❌ 错误：当前有未提交的修改，请先 stash 或 commit" && exit 1)
+```
+
 ---
 
 ## 9. 代码组织结构规范（AI 必读）
@@ -202,12 +213,12 @@ func (s *service) Process(ctx context.Context, req *Request) (*Response, error) 
 
 ### ✅ 必做
 
-| 必做               | 说明                            |
-| ---------------- | ----------------------------- |
-| **简单行为**（<200 行） | 直接一个大写方法搞定                    |
-| **复杂行为**（>200 行） | 一个大写入口 + 多个小写实现               |
-| **IO 尽量集中**      | 能提前查的放 `loadData()`，依赖型放对应逻辑后 |
-| **同类型批量查**       | 多个同类数据用 `WhereIn`             |
+| 必做 | 说明 |
+| --- | --- |
+| **简单行为**（<200 行） | 直接一个大写方法搞定 |
+| **复杂行为**（>200 行） | 一个大写入口 + 多个小写实现 |
+| **IO 尽量集中** | 能提前查的放 `loadData()`，依赖型放对应逻辑后 |
+| **同类型批量查** | 多个同类数据用 `WhereIn` |
 
 ### 📝 模板
 
@@ -269,13 +280,13 @@ func (h *Handler) updateDB() error    { /* 写入 */ }
 
 ### 🔍 自检清单
 
-| 检查项             | 合格   |
-| --------------- | ---- |
-| 简单行为 < 200 行？   | 是/否  |
-| 一个行为一个文件？       | 是    |
-| 复杂行为有大写入口？      | 是    |
-| `for` 里有 `dao`？ | 无    |
-| 同表重复查？          | 尽量避免 |
+| 检查项 | 合格 |
+| --- | --- |
+| 简单行为 < 200 行？ | 是/否 |
+| 一个行为一个文件？ | 是 |
+| 复杂行为有大写入口？ | 是 |
+| `for` 里有 `dao`？ | 无 |
+| 同表重复查？ | 尽量避免 |
 
 ---
 
@@ -352,4 +363,4 @@ if (user.flags & 0x07) == 0x05 {
 
 ---
 
-**版本**: 3.0 | **更新**: 2026-04-05
+**版本**: 3.0 | **更新**: 2026-04-05 | **核心红线**: 开始任何编码任务前，必须先执行"步骤 0：创建功能分支"
