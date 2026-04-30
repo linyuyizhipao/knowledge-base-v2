@@ -474,8 +474,8 @@ slpctl ci -project slp-go -w
 └─────────────────────────────────────────────────────────────┘
                          ↓
 ┌─────────────────────────────────────────────────────────────┐
-│ 2. 拉取最新代码 (dev 分支)                                   │
-│    git pull origin dev                                     │
+│ 2. 拉取最新代码 (master 分支)                                │
+│    git pull origin master                                   │
 └─────────────────────────────────────────────────────────────┘
                          ↓
 ┌─────────────────────────────────────────────────────────────┐
@@ -509,10 +509,10 @@ git checkout -b hu/user_achievement
 git add -A
 git commit -anm 'feat: add user achievement'
 
-# 步骤 3: 合入 dev 分支
-git checkout dev
-git merge hu/user_achievement
-git push origin dev
+# 步骤 3: 创建 PR 并合入 master
+gh pr create --base master --head hu/user_achievement \
+  --title "feat: user achievement" --body "新增用户成就功能"
+gh pr merge --merge
 
 # 步骤 4: 触发构建
 slpctl ci -w

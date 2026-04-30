@@ -95,7 +95,8 @@ slpctl swagger -projects slp-room -out ~/.slp/swagger
 ### 步骤 8：部署测试
 
 ```bash
-git checkout dev && git merge <feature> && git push origin dev
+gh pr create --base master --head <feature> --title "feat: <描述>" --body "<描述>"
+gh pr merge --merge
 slpctl ci -w
 ```
 
@@ -121,10 +122,9 @@ slpctl ci -w
 # 创建功能分支
 git checkout -b hu/<feature_name>
 
-# 合入 dev（推荐 --no-ff 保留历史）
-git checkout dev
-git merge --no-ff hu/<feature_name>
-git push origin dev
+# 创建 PR 并合入 master
+gh pr create --base master --head hu/<feature_name> --title "feat: <描述>" --body "<描述>"
+gh pr merge --merge
 
 # 清理分支
 git branch -d hu/<feature_name>

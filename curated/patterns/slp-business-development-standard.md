@@ -309,12 +309,10 @@ git push origin hu/<business>_feature
 ### 5.4 触发构建
 
 ```bash
-# 提交到 dev 分支
-git checkout dev
-git merge hu/<business>_feature
-git push origin dev
+# 创建 PR 并合入 master
+gh pr create --base master --head hu/<business>_feature --title "<标题>" --body "<描述>"
 
-# 触发 Jenkins 构建
+# PR 合入后触发 Jenkins 构建
 slpctl ci -w
 ```
 
@@ -564,13 +562,11 @@ dao.Log.Insert(ctx, log)  // 事务外！
 git checkout master && git pull
 git checkout -b hu/<feature>
 
-# 合入 dev 测试
-git checkout dev && git merge hu/<feature>
-git push origin dev
+# 创建 PR 到 master
+gh pr create --base master --head hu/<feature> --title "<标题>" --body "<描述>"
 
-# 验证通过后合入 master 发布
-git checkout master && git merge dev
-git push origin master
+# PR 审查通过后合入 master
+gh pr merge --merge
 ```
 
 ---

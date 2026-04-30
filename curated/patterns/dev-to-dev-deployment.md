@@ -2,7 +2,7 @@
 
 > 从本地开发到测试服务器部署的完整流程
 
-**版本**: 1.3 | **最后更新**: 2026-04-27
+**版本**: 1.4 | **最后更新**: 2026-04-30
 
 ---
 
@@ -12,8 +12,8 @@
 完整的 AI 开发流程为：
 
 ```
-阶段0：创建功能分支 → 阶段1~4：需求→知识→设计→实现 → 阶段5：合入部署 → 阶段6：知识沉淀
-                                                         ↑ 本文档覆盖此环节 ↑
+阶段0：创建功能分支 → 阶段1~4：需求→知识→设计→实现 → 阶段5：PR 合入部署 → 阶段6：知识沉淀
+                                                              ↑ 本文档覆盖此环节 ↑
 ```
 
 **开始开发前必读**: [`AI_WORKFLOW.md`](../AI_WORKFLOW.md)
@@ -26,8 +26,7 @@
 
 | 分支类型 | 命名格式 | 说明 |
 |----------|---------|------|
-| 主分支 | `master` | 生产环境代码，受保护 |
-| 开发分支 | `dev` | 测试环境代码，日常合入 |
+| 主分支 | `master` | 生产环境代码，受保护，PR 目标分支 |
 | 功能分支 | `hu/<需求名称>` | 个人功能开发 |
 | 修复分支 | `fix/<问题描述>` | Bug 修复 |
 | 紧急修复 | `hotfix/<问题描述>` | 生产环境紧急修复 |
@@ -35,13 +34,12 @@
 ### 分支保护规则
 
 - `master`: 保护分支，只能通过 PR 合入，需要审核
-- `dev`: 开发分支，功能开发完成后合入
 - 功能分支：个人开发，完成后可删除
 
 ### ⚠️ 重要禁令
 
-1. **禁止在 dev 分支直接开发新功能** - dev 只用于合入，不作为开发分支
-2. **禁止 dev → 功能分支的合并** - 只能功能分支 → dev
+1. **禁止在 master 分支直接开发新功能** - 必须从 master 创建功能分支
+2. **禁止跳过 PR 直接合并** - 所有合入 master 的变更必须通过 PR
 3. **禁止使用 Docker** - 部署采用 Jenkins 构建
 4. **禁止跳过知识检索直接写代码** - 必须先阅读 `QUICK_REFERENCE.md` 及对应类型文档
 
@@ -99,9 +97,9 @@ git commit -anm 'feat: add user achievement system
 
 ---
 
-### 阶段 3：合入 dev 分支
+### 阶段 3：创建 PR 并合入 master
 
-#### 3.1 准备合入
+#### 3.1 准备 PR
 
 ```bash
 # 1. 确认功能分支开发完成
@@ -112,55 +110,57 @@ git status  # 确保没有未提交的修改
 git push origin hu/user_achievement
 ```
 
-#### 3.2 解决冲突（如有）
+#### 3.2 创建 PR
+
+```bash
+# 使用 gh 创建 PR，目标分支为 master
+gh pr create \
+  --base master \
+  --head hu/user_achievement \
+  --title "feat: 用户成就系统" \
+  --body "## 变更内容
+- 新增成就相关表和 DAO
+- 新增 ChatGiftScene handler
+- 新增 NSQ 通知"
+```
+
+#### 3.3 解决冲突（如 PR 有冲突）
 
 **冲突解决原则**：
 
 | 冲突类型 | 解决策略 |
 |----------|---------|
 | 本次修改的业务代码 | 以功能分支为准 |
-| dev 分支的公共配置 | 以 dev 分支为准 |
+| master 的公共配置 | 评估后决定 |
 | deploy/helm 配置文件 | 以功能分支为准（进程重启配置） |
 | 不确定归属的冲突 | 提示用户协助解决 |
 
 ```bash
-# 1. 切换到 dev 分支
-git checkout dev
+# 1. 在功能分支上解决冲突
+git checkout hu/user_achievement
 
-# 2. 尝试合并功能分支
-git merge hu/user_achievement
+# 2. 拉取最新 master
+git fetch origin
+git rebase origin/master
 
-# 3. 如果有冲突，查看冲突文件
+# 3. 如果有冲突，编辑文件解决
 git status
 
-# 4. 编辑冲突文件，解决冲突标记
-# <<<<<<< HEAD (dev 分支)
-# =======
-# >>>>>>> hu/user_achievement (功能分支)
-
-# 5. 解决冲突后标记为已解决
+# 4. 解决冲突后继续 rebase
 git add <file>
+git rebase --continue
 
-# 6. 完成合并
-git commit -m "merge: hu/user_achievement into dev"
-
-# 7. 推送到远程
-git push origin dev
+# 5. 推送到远程（如已 push 过需 force push）
+git push --force-with-lease origin hu/user_achievement
 ```
 
-#### 3.3 合并命令（无冲突时）
+#### 3.4 合入 master
 
 ```bash
-# 1. 切换到 dev 分支
-git checkout dev
+# PR 审查通过后，使用 gh 合入
+gh pr merge --merge
 
-# 2. 合并功能分支
-git merge hu/user_achievement
-
-# 3. 推送到远程
-git push origin dev
-
-# 4. 删除已合并的功能分支（可选）
+# 删除已合并的功能分支（可选）
 git branch -d hu/user_achievement
 git push origin --delete hu/user_achievement
 ```
@@ -169,23 +169,7 @@ git push origin --delete hu/user_achievement
 
 ### 阶段 4：部署到测试服务器
 
-#### 4.1 推送 dev 分支到远程
-
-```bash
-# 1. 确保在 dev 分支
-git checkout dev
-
-# 2. 拉取最新代码
-git pull origin dev
-
-# 3. 确保本地 dev 已包含功能分支的提交
-git log --oneline -5  # 确认合并记录
-
-# 4. 推送到远程（如果之前已推送过，跳过）
-git push origin dev
-```
-
-#### 4.2 触发 Jenkins 构建
+#### 4.1 触发 Jenkins 构建
 
 ```bash
 # 方式 1：使用 slpctl ci 命令（推荐）
@@ -199,7 +183,7 @@ sb -w
 # 找到对应项目，点击"Build Now"
 ```
 
-#### 4.3 构建流程说明
+#### 4.2 构建流程说明
 
 `slpctl ci -w` 命令执行内容：
 
@@ -218,13 +202,13 @@ JOB_NAME=$(basename "$(pwd)")  # slp-go, slp-room, etc.
 # - 显示最终结果
 
 # 4. Jenkins 服务端执行：
-# - git pull origin dev (拉取最新代码)
+# - git pull origin master (拉取最新代码)
 # - make build (编译构建)
 # - 部署到测试服务器
 # - supervisorctl restart (重启进程)
 ```
 
-#### 4.4 验证部署
+#### 4.3 验证部署
 
 ```bash
 # 1. 查看 slpctl ci 命令输出
@@ -262,7 +246,7 @@ git add deploy/helm_dev/rpc/values.yaml
 
 ```bash
 # Git 通常会自动合并
-git merge hu/user_achievement
+git rebase origin/master
 ```
 
 **场景 2：同一行代码冲突**
@@ -277,8 +261,8 @@ vim rpc/server/internal/consume/stage2/handler_stage2.go
 # 3. 标记为已解决
 git add rpc/server/internal/consume/stage2/handler_stage2.go
 
-# 4. 完成合并
-git commit -m "merge: resolve conflicts"
+# 4. 完成 rebase
+git rebase --continue
 ```
 
 **场景 3：不确定归属的冲突**
@@ -338,16 +322,16 @@ deploy/
 
 ```bash
 # 1. 基于 master 创建修复分支
-git checkout master
+git checkout master && git pull
 git checkout -b fix/stage2_null_check
 
 # 2. 修复代码并提交
 git commit -anm 'fix: nil check in Stage2 handler'
 
-# 3. 合入 dev
-git checkout dev
-git merge fix/stage2_null_check
-git push origin dev
+# 3. 创建 PR 并合入 master
+gh pr create --base master --head fix/stage2_null_check \
+  --title "fix: Stage2 null check" --body "修复 Stage2 handler 空指针"
+gh pr merge --merge
 
 # 4. 部署测试
 slpctl ci -w
@@ -357,6 +341,7 @@ slpctl ci -w
 
 ```bash
 # 1. 创建功能主分支
+git checkout master && git pull
 git checkout -b hu/user_achievement
 
 # 2. 推送并设置上游
@@ -370,47 +355,43 @@ git checkout -b hu/user_achievement_sub1
 git checkout hu/user_achievement
 git merge hu/user_achievement_sub1
 
-# 5. 主分支完成后合入 dev
-git checkout dev
-git merge hu/user_achievement
-git push origin dev
+# 5. 主分支完成后创建 PR 到 master
+gh pr create --base master --head hu/user_achievement \
+  --title "feat: 用户成就系统" --body "完整实现"
+gh pr merge --merge
 ```
 
 ### 场景 3：紧急上线
 
 ```bash
 # 1. 基于 master 创建 hotfix 分支
-git checkout master
+git checkout master && git pull
 git checkout -b hotfix/critical_bug
 
 # 2. 修复并测试
 git commit -anm 'hotfix: critical bug fix'
 
-# 3. 合入 master 和 dev
-git checkout master
-git merge hotfix/critical_bug
-git push origin master
-
-git checkout dev
-git merge hotfix/critical_bug
-git push origin dev
+# 3. 创建 PR 到 master 并合入
+gh pr create --base master --head hotfix/critical_bug \
+  --title "hotfix: 紧急修复 xxx" --body "紧急修复说明"
+gh pr merge --merge
 ```
 
 ---
 
 ## 六、检查清单
 
-### 合入 dev 前检查
+### PR 提交前检查
 
 - [ ] 代码已在本地测试通过
 - [ ] Commit 信息清晰可读
 - [ ] 无编译错误和 Warning
-- [ ] 已解决所有 Git 冲突
+- [ ] PR 目标分支为 master
 - [ ] deploy/helm 配置已更新（如需要）
 
 ### 部署后检查
 
-- [ ] sb 命令输出 SUCCESS
+- [ ] slpctl ci 命令输出 SUCCESS
 - [ ] Jenkins 构建日志无错误
 - [ ] Supervisor 进程状态正常
 - [ ] 日志无 Error
