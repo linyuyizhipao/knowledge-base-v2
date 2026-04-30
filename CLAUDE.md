@@ -39,6 +39,14 @@ knowledge-base-v2/
 │   ├── pdfs/              ← PDF 文件
 │   └── curls/             ← curl 命令
 │
+├── scripts/               ← 工具脚本（可执行代码）
+│   ├── *.py               ← Python 脚本（知识库维护、工具等）
+│   ├── *.sh               ← Shell 脚本
+│   ├── init_graph.py      ← 图谱初始化
+│   ├── discover.py        ← 知识发现模块
+│   ├── compile.py         ← 编译脚本
+│   └── h5-token-decrypt.py ← H5 支付 Token 解密工具
+│
 ├── wiki/                  ← AI 编译（自动生成）
 │   ├── sources/           ← 素材摘要
 │   ├── entities/          ← 概念实体
@@ -63,11 +71,6 @@ knowledge-base-v2/
 │   │   └ compile/         ← /compile 编译 wiki
 │   └
 │   └ settings.json        ← Claude Code 配置
-│
-└── scripts/
-    ├── init_graph.py      ← 图谱初始化
-    ├── discover.py        ← 知识发现模块
-    └ compile.py           ← 编译脚本
 ```
 
 ---
@@ -109,7 +112,31 @@ LLM 回答（带引用）
 
 ---
 
-## 快速定位 (shortcuts)
+## 文件存放规则
+
+### 目录用途速查
+
+| 目录 | 用途 | 示例 |
+|------|------|------|
+| `curated/` | 手动维护的结构化内容 | 技术设计、开发规范 |
+| `raw/` | 待处理的素材（AI 要消化的） | 文章、笔记、PDF、curl |
+| `scripts/` | 可执行工具脚本 | Python/Shell 脚本 |
+| `wiki/` | AI 编译生成的内容 | 知识摘要、图谱节点 |
+
+### scripts/ vs raw/ 的判断标准
+
+**放进 `scripts/`**（满足任一）：
+- 脚本能直接运行：`python xxx.py` 或 `./xxx.sh`
+- 是代码文件（Python/Shell）
+- 用于维护知识库或辅助开发
+
+**放进 `raw/`**（满足任一）：
+- 需要 AI 消化编译的素材
+- 是内容文件（文章、笔记、PDF、curl 命令）
+
+**示例**：
+- `scripts/h5-token-decrypt.py` ✅ - Token 解密工具（可执行）
+- `raw/articles/web-page.html` ✅ - 网页文章（需编译）
 
 | 关键词 | wiki 文件 |
 |--------|----------|
