@@ -3,8 +3,8 @@ id: tools/slpctl
 label: slpctl
 source: curated/tools/slpctl.md
 role: 工具
-compiled: 2026-04-28
-source_hash: 22e54e42d0fced27b30e0d25f318b6e7
+compiled: 2026-04-30
+source_hash: ef085a11c008af64
 ---
 
 > SLP 框架配套的命令行工具集
@@ -69,7 +69,7 @@ slpctl gen -t xs_user_profile -delete            # 删除
 
 **支持项目**：slp-go | slp-room | slp-starship | slp-common-rpc
 
-**Jenkins 流程**：拉取 dev → `make build` → 部署到测试服务器 → supervisorctl restart → 健康检查
+**Jenkins 流程**：拉取 master → `make build` → 部署到测试服务器 → supervisorctl restart → 健康检查
 
 ## state / codec / swagger / proxy
 

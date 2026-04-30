@@ -3,8 +3,8 @@ id: patterns/slp-business-development-standard
 label: slp-business-development-standard
 source: curated/patterns/slp-business-development-standard.md
 role: 规范
-compiled: 2026-04-28
-source_hash: 8a29df3b8d009ac263747b7916054f57
+compiled: 2026-04-30
+source_hash: daacd49ce0512e74
 ---
 
 > 基于 SLPCTL 工具的标准开发流程
@@ -29,7 +29,9 @@ slpctl gen -t xs_<table>
 slpctl code -api /go/room/<biz>/<action> -desc "<desc>"
 slpctl code -config apis.json
 
-# 步骤 5：部署
+# 步骤 5：部署（PR 到 master）
+gh pr create --base master --head hu/<feature> --title "<标题>" --body "<描述>"
+gh pr merge --merge
 slpctl ci -w
 slpctl swagger -projects <project> -out ~/.slp/swagger
 ```

@@ -3,13 +3,16 @@ id: ai-workflow
 label: AI 新需求开发流程（7阶段）
 source: curated/AI_WORKFLOW.md
 role: workflow
-compiled: 2026-04-27
+compiled: 2026-04-30
+source_hash: 285d3865644b580a
 tags:
   - workflow
   - development
   - core
   - sub-agent
   - slpctl能力前置
+  - PR
+  - master
 links:
   - coding-standards
   - slpctl-usage-guide
@@ -24,7 +27,7 @@ links:
 ## 流程概览（7 阶段）
 
 ```
-阶段 0：创建功能分支 → 检查已有分支 / 从 master 拉取 / 禁止在 dev 开发
+阶段 0：创建功能分支 → 从 master 拉取 / 禁止直接在 master 开发
     ↓
 阶段 1：需求分析 → 确定需求类型（API/事件/CMD/DB）
     ↓
@@ -34,7 +37,7 @@ links:
     ↓
 阶段 4：实施开发 → 按复杂度触发 sub-agent，使用 slpctl 生成代码
     ↓
-阶段 5：合入与部署 → 代码审查（code-reviewer agent），合入 dev，触发 Jenkins 构建
+阶段 5：PR 合入与部署 → 代码审查 → gh pr create → PR 合入 master → Jenkins 构建
     ↓
 阶段 6：知识沉淀 → 更新相关文档，记录新模式/反模式
 ```
@@ -62,9 +65,9 @@ git push -u origin hu/<需求名称>
 ```
 
 **⚠️ 禁令**：
-- ❌ 禁止在 dev 分支直接开发 — dev 只用于合入，不作为开发分支
-- ❌ 禁止在 master 分支直接开发 — master 是生产保护分支
-- ❌ 禁止 dev → 功能分支的合并 — 只能功能分支 → dev
+- ❌ 禁止在 master 分支直接开发 — 必须从 master 创建功能分支
+- ❌ 禁止在功能分支以外的分支开发 — 所有改动在功能分支完成
+- PR 目标分支为 master — 从 master 拉分支，开发完 PR 回 master
 
 ### 步骤 1：需求分析
 
@@ -111,17 +114,17 @@ slpctl gen -t <table_name> -d <database>
 slpctl ci -w
 ```
 
-### 步骤 5：合入与部署
+### 步骤 5：PR 合入与部署
 
 **代码审查**：实现完成后，启动 `code-reviewer` agent 进行审查。
 
-**合入 dev 分支**：
+**创建 PR 并合入 master**：
 
 ```bash
 git status
 git push origin hu/<需求名称>
-git checkout dev && git pull origin dev
-git merge hu/<需求名称> && git push origin dev
+gh pr create --base master --head hu/<需求名称> --title "<标题>" --body "<描述>"
+gh pr merge --merge
 ```
 
 **部署**：

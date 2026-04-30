@@ -3,8 +3,8 @@ id: patterns/project-learning-framework
 label: project-learning-framework
 source: curated/patterns/project-learning-framework.md
 role: 规范
-compiled: 2026-04-28
-source_hash: b35ab3a6cd70bcbbf60832b788b2ba2f
+compiled: 2026-04-30
+source_hash: 12bab5b6ae333bab
 ---
 
 > 可复用的新项目学习方法论

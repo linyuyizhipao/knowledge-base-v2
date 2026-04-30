@@ -3,8 +3,8 @@ id: tools/slpctl-usage-guide
 label: slpctl-usage-guide
 source: curated/tools/slpctl-usage-guide.md
 role: 工具
-compiled: 2026-04-28
-source_hash: e18e995d5979ba587acf204c312d10ac
+compiled: 2026-04-30
+source_hash: 489a980b806156210
 ---
 
 > slpctl 开发工作流指南
@@ -42,10 +42,11 @@ make proto          # 修改过的
 make proto-all      # 全部
 ```
 
-### 步骤 8：部署
+### 步骤 8：部署（PR 到 master）
 
 ```bash
-git checkout dev && git merge <feature> && git push origin dev
+gh pr create --base master --head <feature> --title "feat: <描述>" --body "<描述>"
+gh pr merge --merge
 slpctl ci -w
 ```
 

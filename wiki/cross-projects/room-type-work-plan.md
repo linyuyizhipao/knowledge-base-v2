@@ -3,10 +3,12 @@ id: room-type-work-plan
 label: 房间类型拓展工作计划
 source: curated/cross-projects/chatroom/room-type-work-plan.md
 business: chatroom
-compiled: 2026-04-25
+compiled: 2026-04-30
+source_hash: bfb81fd974e55d38
 links:
   - room-type-concept
   - room-type-development
+  - dev-to-dev-deployment
 ---
 
 # 房间类型拓展工作计划

@@ -3,7 +3,7 @@ id: quick-reference
 label: AI 快速参考卡片
 source: curated/QUICK_REFERENCE.md
 role: reference
-compiled: 2026-04-27
+compiled: 2026-04-30
 tags:
   - reference
   - quick-start
@@ -16,6 +16,8 @@ links:
   - coding-standards
   - sub-agent-orchestration
   - gh-pr-analysis
+  - slpctl-usage-guide
+  - dev-to-dev-deployment
 ---
 
 # AI 快速参考卡片
@@ -42,7 +44,7 @@ links:
 ## 开发流程（7 阶段）
 
 ```
-阶段0：创建功能分支（禁止在 dev/master 直接开发）
+阶段0：创建功能分支（禁止在 master 直接开发）
          ↓
 阶段1：需求分析 → 确定项目/类型
          ↓
@@ -52,7 +54,7 @@ links:
          ↓
 阶段4：实施开发 → 按复杂度触发 sub-agent + slpctl 生成代码
          ↓
-阶段5：合入与部署 → 代码审查 + 合入 dev + Jenkins 构建
+阶段5：合入与部署 → 代码审查 + PR 合入 master + Jenkins 构建
          ↓
 阶段6：知识沉淀 → 更新对应文档
 ```
