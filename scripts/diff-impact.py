@@ -154,11 +154,33 @@ class DiffImpactAnalyzer:
         if "app/api/" in file_path or "app/handler/" in file_path:
             result = ("http", None)
         elif "rpc/server/internal/" in file_path:
+            # 两种情况：
+            # 1. rpc/server/internal/user.go → 入口文件，服务名从文件名提取
+            # 2. rpc/server/internal/user/xxx.go → 服务实现，服务名从目录名提取
             m = re.search(r'rpc/server/internal/([^/]+)/', file_path)
-            result = ("rpc", m.group(1)) if m else (None, None)
+            if m:
+                result = ("rpc", m.group(1))
+            else:
+                # 入口文件：rpc/server/internal/user.go
+                m2 = re.search(r'rpc/server/internal/(\w+)\.go$', file_path)
+                if m2:
+                    result = ("rpc", m2.group(1))
+                else:
+                    result = (None, None)
         elif "cmd/internal/" in file_path:
+            # 两种情况：
+            # 1. cmd/internal/anchor.go → 入口文件
+            # 2. cmd/internal/anchor/xxx.go → 服务实现
             m = re.search(r'cmd/internal/([^/]+)/', file_path)
-            result = ("cmd", m.group(1)) if m else (None, None)
+            if m:
+                result = ("cmd", m.group(1))
+            else:
+                # 入口文件：cmd/internal/anchor.go
+                m2 = re.search(r'cmd/internal/(\w+)\.go$', file_path)
+                if m2:
+                    result = ("cmd", m2.group(1))
+                else:
+                    result = (None, None)
         elif "library/" in file_path or "app/consts/" in file_path or "app/dao/" in file_path:
             result = ("library", None)
         else:

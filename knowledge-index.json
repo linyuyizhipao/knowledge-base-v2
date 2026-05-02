@@ -30,7 +30,8 @@
     "curl测试": "wiki/curls/07-test/slp-test.md",
     "curl缓存": "wiki/curls/09-cache-consume/cache-ops.md",
     "curl充值": "wiki/curls/10-activity/pay.md",
-    "curl沉淀": "wiki/tools/curl-sink.md"
+    "curl沉淀": "wiki/tools/curl-sink.md",
+    "变更影响": "wiki/tools/diff-impact.md"
   },
   "core_rules": {
     "禁止手动写API": {
@@ -241,6 +242,12 @@
       "id": "tools/slpctl-usage-guide",
       "path": "wiki/tools/slpctl-usage-guide.md",
       "label": "slpctl使用指南",
+      "category": "tool"
+    },
+    {
+      "id": "tools/diff-impact",
+      "path": "wiki/tools/diff-impact.md",
+      "label": "代码变更影响分析",
       "category": "tool"
     },
     {

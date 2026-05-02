@@ -132,3 +132,6 @@
 {"from": "patterns/cache-usage-guide", "to": "patterns/nsq-usage", "type": "llm_discovered", "weight": 1.5, "source": "compile_llm", "reason": "缓存规范引用队列规范", "created": "2026-04-29T16:45:00"}
 {"from": "patterns/cache-usage-guide", "to": "CODING_STANDARDS", "type": "llm_discovered", "weight": 2.0, "source": "compile_llm", "reason": "缓存规范引用核心禁令", "created": "2026-04-29T16:45:00"}
 {"from": "patterns/cache-usage-guide", "to": "patterns/business-module-standard", "type": "llm_discovered", "weight": 1.5, "source": "compile_llm", "reason": "缓存规范引用模块标准", "created": "2026-04-29T16:45:00"}
+{"from": "tools/diff-impact", "to": "CODING_STANDARDS", "type": "relates_to", "weight": 1.0, "source": "compile", "created": "2026-05-02T22:30:00"}
+{"from": "tools/diff-impact", "to": "tools/slpctl-usage-guide", "type": "relates_to", "weight": 1.5, "source": "compile", "created": "2026-05-02T22:30:00"}
+{"from": "tools/diff-impact", "to": "projects/slp-go/01-structure", "type": "relates_to", "weight": 1.0, "source": "compile", "created": "2026-05-02T22:30:00"}
