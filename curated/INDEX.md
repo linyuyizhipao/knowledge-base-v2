@@ -64,6 +64,9 @@
 | slpctl | [tools/slpctl.md](tools/slpctl.md) | 完整命令参考 |
 | slpctl使用指南 | [tools/slpctl-usage-guide.md](tools/slpctl-usage-guide.md) | 8步开发流程 |
 | gh PR分析 | [tools/gh-pr-analysis.md](tools/gh-pr-analysis.md) | PR分析命令 |
+| diff-impact | [tools/diff-impact-user-guide.md](tools/diff-impact-user-guide.md) | 变更影响分析工具 |
+| diff-impact脚本 | [../scripts/diff-impact.sh](../scripts/diff-impact.sh) | 主脚本 |
+| diff-impact验证 | [../scripts/validate-diff-impact.sh](../scripts/validate-diff-impact.sh) | 验证脚本 |
 
 ---
 
