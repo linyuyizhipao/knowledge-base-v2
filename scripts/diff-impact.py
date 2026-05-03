@@ -1,21 +1,18 @@
 #!/usr/bin/env python3
 """
-diff-impact.py - 代码变更影响分析（高性能版 v2）
+diff-impact.py - 代码变更影响分析
 
-核心优化：
-1. 不预构建全项目索引，改为按需搜索 + 结果缓存
-2. 只追踪变更元素，逐步展开
-3. 遇到服务入口立即停止，不继续传播
+追踪代码变更的传播路径，找出需要重启的服务。
+只负责识别受影响的服务，不涉及 deploy 操作。
 
 用法：python scripts/diff-impact.py
 """
 
-import os
 import re
 import json
 import subprocess
 from pathlib import Path
-from collections import defaultdict, deque
+from collections import deque
 
 
 class DiffImpactAnalyzer:
@@ -31,9 +28,9 @@ class DiffImpactAnalyzer:
         self.circular_references = []
 
         # 按需缓存（不预构建）
-        self._grep_cache = {}  # pattern -> [files]
-        self._file_info_cache = {}  # file_path -> {package, imports, functions}
-        self._service_cache = {}  # file_path -> (type, name)
+        self._grep_cache = {}
+        self._file_info_cache = {}
+        self._service_cache = {}
 
     def run(self):
         """主入口"""
@@ -50,20 +47,16 @@ class DiffImpactAnalyzer:
 
         self.project_root = Path.cwd()
 
-        # 获取变更文件
         self.changed_files = self._get_changed_files()
         if not self.changed_files:
             return self._output_success()
 
-        # 提取变更元素
         print("🔍 分析变更文件...", file=__import__('sys').stderr)
         self.changed_elements = self._extract_changed_elements()
 
-        # BFS 追踪（按需搜索，不预构建）
         print("🔍 追踪引用传播...", file=__import__('sys').stderr)
         self._trace_all_elements()
 
-        # 生成重启命令
         restart_commands = self._generate_restart_commands()
 
         return self._output_result(current_branch, restart_commands)
@@ -101,7 +94,6 @@ class DiffImpactAnalyzer:
         return files
 
     def _read_file(self, file_path):
-        """读取文件内容"""
         full_path = self.project_root / file_path
         if not full_path.exists():
             return None
@@ -111,7 +103,6 @@ class DiffImpactAnalyzer:
             return None
 
     def _parse_file_info(self, file_path):
-        """解析单个文件信息（带缓存）"""
         if file_path in self._file_info_cache:
             return self._file_info_cache[file_path]
 
@@ -119,16 +110,12 @@ class DiffImpactAnalyzer:
         if not content:
             return None
 
-        # package 名
         pkg_match = re.search(r'package\s+(\w+)', content)
         package_name = pkg_match.group(1) if pkg_match else Path(file_path).parent.name
 
-        # imports（提取别名）
         import_aliases = {}
-        # 单行 import
         for m in re.finditer(r'(\w+)\s+"([^"]+)"', content):
             import_aliases[m.group(1)] = m.group(2)
-        # 多行 import
         import_block = re.search(r'import\s*\(([^)]+)\)', content)
         if import_block:
             for m in re.finditer(r'(\w+)\s+"([^"]+)"', import_block.group(1)):
@@ -138,44 +125,33 @@ class DiffImpactAnalyzer:
                 alias = path.split('/')[-1]
                 import_aliases[alias] = path
 
-        # 函数定义（包括方法）
         functions = re.findall(r'func\s+(?:\([^)]*\)\s+)?(\w+)\s*\(', content)
 
-        # 缓存（不存 content，节省内存）
         info = {"package_name": package_name, "import_aliases": import_aliases, "functions": functions}
         self._file_info_cache[file_path] = info
         return info
 
     def _get_service_from_file(self, file_path):
-        """获取服务归属（带缓存）"""
         if file_path in self._service_cache:
             return self._service_cache[file_path]
 
         if "app/api/" in file_path or "app/handler/" in file_path:
             result = ("http", None)
         elif "rpc/server/internal/" in file_path:
-            # 两种情况：
-            # 1. rpc/server/internal/user.go → 入口文件，服务名从文件名提取
-            # 2. rpc/server/internal/user/xxx.go → 服务实现，服务名从目录名提取
             m = re.search(r'rpc/server/internal/([^/]+)/', file_path)
             if m:
                 result = ("rpc", m.group(1))
             else:
-                # 入口文件：rpc/server/internal/user.go
                 m2 = re.search(r'rpc/server/internal/(\w+)\.go$', file_path)
                 if m2:
                     result = ("rpc", m2.group(1))
                 else:
                     result = (None, None)
         elif "cmd/internal/" in file_path:
-            # 两种情况：
-            # 1. cmd/internal/anchor.go → 入口文件
-            # 2. cmd/internal/anchor/xxx.go → 服务实现
             m = re.search(r'cmd/internal/([^/]+)/', file_path)
             if m:
                 result = ("cmd", m.group(1))
             else:
-                # 入口文件：cmd/internal/anchor.go
                 m2 = re.search(r'cmd/internal/(\w+)\.go$', file_path)
                 if m2:
                     result = ("cmd", m2.group(1))
@@ -192,50 +168,41 @@ class DiffImpactAnalyzer:
     def _find_instance_callers(self, pkg, method_name, changed_file):
         """查找通过实例调用方法的文件（如 rankScene.GetRank）
 
-        优化策略：直接搜索 .MethodName 调用，再验证是否来自正确的包
+        支持两种形式：
+        - 直接调用：obj.MethodName(args)
+        - 函数引用：callback(obj.MethodName)  ← cron 回调等场景
         """
-        # 直接搜索 .MethodName 调用（所有实例调用）
-        call_pattern = f"\\.{method_name}\\("
+        call_pattern = f"\\.{method_name}\\b"
         all_callers = self._grep_pattern(call_pattern)
 
         result_files = set()
         for file_path in all_callers:
-            # 检查该文件是否导入了变更文件的包
             info = self._parse_file_info(file_path)
             if not info:
                 continue
 
-            # 检查导入别名是否指向变更包
             import_aliases = info.get("import_aliases", {})
             pkg_path = self._get_package_path_from_file(changed_file)
 
-            # 如果导入路径匹配变更包路径，则该文件可能调用变更方法
             for alias, import_path in import_aliases.items():
                 if import_path == pkg_path or import_path.endswith(f"/{pkg}"):
-                    # 该文件导入了变更包，可能是实例调用者
-                    # 验证是否真的有 varName.MethodName 模式
                     content = self._read_file(file_path)
-                    if content and f".{method_name}(" in content:
-                        # 检查是否有从该包获取对象的模式
-                        if re.search(rf'{pkg}\.\w+', content):
+                    if content and re.search(rf'\.{method_name}\b', content):
+                        rpc_client_pattern = rf'client\.\w+\.{method_name}\b'
+                        if not re.search(rpc_client_pattern, content):
                             result_files.add(file_path)
-                            break
+                        break
 
         return result_files
 
     def _get_package_path_from_file(self, file_path):
-        """从文件路径推导包的导入路径"""
-        # 例如: app/domain/rank/base.go → slp/app/domain/rank
         parts = Path(file_path).parts
-        # 找到 app/rpc/cmd 的位置
         for i, part in enumerate(parts):
             if part in ["app", "rpc", "cmd", "library"]:
-                # 组合模块名 + 后续路径
                 return f"{self.module_name}/{Path(*parts[i:-1])}"
         return None
 
     def _grep_pattern(self, pattern, dirs=["app", "rpc", "cmd"]):
-        """grep 搜索（带缓存）"""
         cache_key = pattern
         if cache_key in self._grep_cache:
             return self._grep_cache[cache_key]
@@ -260,7 +227,6 @@ class DiffImpactAnalyzer:
         return files
 
     def _extract_changed_elements(self):
-        """提取变更元素，并处理私有函数的传播"""
         elements = []
         private_funcs = []
 
@@ -270,42 +236,129 @@ class DiffImpactAnalyzer:
                 continue
 
             package_name = info["package_name"]
-            content = self._read_file(file_path) or ""
+            changed_funcs = self._get_changed_functions_from_diff(file_path)
 
-            # 分类：公开函数 vs 私有函数
-            for name in info["functions"]:
-                if name[0].isupper():  # Go 公开函数首字母大写
-                    elements.append({"name": name, "type": "func", "file": file_path, "package": package_name})
+            for func_name in changed_funcs:
+                if func_name[0].isupper():
+                    elements.append({"name": func_name, "type": "func", "file": file_path, "package": package_name})
                 else:
-                    private_funcs.append({"name": name, "file": file_path, "package": package_name})
+                    private_funcs.append({"name": func_name, "file": file_path, "package": package_name})
 
-            # 变量/常量（只追踪公开的）
-            consts = re.findall(r'^const\s+(\w+)\s*=', content, re.MULTILINE)
-            vars_ = re.findall(r'^var\s+(\w+)\s*[=\s]', content, re.MULTILINE)
-            for name in consts:
+            changed_consts, changed_vars = self._get_changed_vars_consts_from_diff(file_path)
+            for name in changed_consts:
                 if name[0].isupper():
                     elements.append({"name": name, "type": "const", "file": file_path, "package": package_name})
-            for name in vars_:
+            for name in changed_vars:
                 if name[0].isupper():
                     elements.append({"name": name, "type": "var", "file": file_path, "package": package_name})
 
-        # 处理私有函数：找同包内调用它的公开函数
         for private_func in private_funcs:
-            caller_elements = self._find_public_callers_in_same_package(private_func)
+            caller_elements = self._find_public_callers_via_private_chain(private_func)
             for caller in caller_elements:
                 if caller not in elements:
                     elements.append(caller)
 
-        print(f"   公开元素: {len(elements)} 个（含私有函数传播）", file=__import__('sys').stderr)
+        print(f"   变更元素: {len(elements)} 个（从 diff 精确提取）", file=__import__('sys').stderr)
         return elements
 
+    def _get_changed_functions_from_diff(self, file_path):
+        result = subprocess.run(
+            ["git", "diff", "master", "--no-color", "-U0", file_path],
+            capture_output=True, text=True, cwd=self.project_root
+        )
+        diff_content = result.stdout
+
+        if not diff_content:
+            return set()
+
+        changed_funcs = set()
+        content = self._read_file(file_path) or ""
+
+        current_line = 0
+        for line in diff_content.split('\n'):
+            if line.startswith('@@'):
+                m = re.search(r'\+(\d+)', line)
+                if m:
+                    current_line = int(m.group(1))
+            elif line.startswith('+') and not line.startswith('+++'):
+                func_name = self._find_function_at_line(content, current_line)
+                if func_name:
+                    changed_funcs.add(func_name)
+                current_line += 1
+            elif not line.startswith('-') and not line.startswith('@@'):
+                current_line += 1
+
+        return changed_funcs
+
+    def _find_function_at_line(self, content, target_line):
+        lines = content.split('\n')
+        current_func = None
+        func_start_line = 0
+
+        for i, line in enumerate(lines, 1):
+            m = re.match(r'func\s+(?:\([^)]*\)\s+)?(\w+)\s*\(', line)
+            if m:
+                current_func = m.group(1)
+                func_start_line = i
+
+            if current_func and i >= func_start_line:
+                if i == target_line:
+                    return current_func
+
+                next_m = re.match(r'func\s+(?:\([^)]*\)\s+)?(\w+)\s*\(', line)
+                if next_m and i > func_start_line:
+                    current_func = next_m.group(1)
+                    func_start_line = i
+
+        return None
+
+    def _get_changed_vars_consts_from_diff(self, file_path):
+        result = subprocess.run(
+            ["git", "diff", "master", "--no-color", "-U0", file_path],
+            capture_output=True, text=True, cwd=self.project_root
+        )
+        diff_content = result.stdout
+
+        if not diff_content:
+            return set(), set()
+
+        changed_consts = set()
+        changed_vars = set()
+
+        for line in diff_content.split('\n'):
+            if line.startswith('+') and not line.startswith('+++'):
+                m = re.match(r'^\+\s*const\s+(\w+)\s*=', line)
+                if m:
+                    changed_consts.add(m.group(1))
+                m = re.match(r'^\+\s*var\s+(\w+)\s*[=\s]', line)
+                if m:
+                    changed_vars.add(m.group(1))
+                m = re.match(r'^\+\s+(\w+)\s*=\s*', line)
+                if m and m.group(1)[0].isupper():
+                    changed_consts.add(m.group(1))
+
+        return changed_consts, changed_vars
+
+    def _extract_func_body(self, content, func_start_pos):
+        """用大括号计数提取函数体，支持任意嵌套深度"""
+        brace_pos = content.find('{', func_start_pos)
+        if brace_pos == -1:
+            return None
+        depth = 0
+        for i in range(brace_pos, len(content)):
+            if content[i] == '{':
+                depth += 1
+            elif content[i] == '}':
+                depth -= 1
+                if depth == 0:
+                    return content[brace_pos+1:i]
+        return None
+
     def _find_public_callers_in_same_package(self, private_func):
-        """找到同包内调用私有函数的公开函数"""
         pkg = private_func["package"]
         func_name = private_func["name"]
         file_path = private_func["file"]
 
-        # 获取包内所有文件（使用绝对路径）
         pkg_dir = self.project_root / Path(file_path).parent
         pkg_files = list(pkg_dir.glob("*.go"))
 
@@ -315,37 +368,82 @@ class DiffImpactAnalyzer:
                 continue
             content = f.read_text(encoding='utf-8', errors='ignore')
 
-            # 检查是否调用了该私有函数
             if func_name not in content:
                 continue
 
-            # 提取公开函数定义
             for m in re.finditer(r'func\s+(?:\([^)]*\)\s+)?(\w+)\s*\(', content):
                 func_def_name = m.group(1)
                 if not func_def_name[0].isupper():
-                    continue  # 只找公开函数
+                    continue
 
-                # 检查该公开函数是否调用了私有函数
-                func_start = m.end()
-                func_body_match = re.search(r'\{([^}]*(?:\{[^}]*\}[^}]*)*)\}', content[func_start:])
-                if func_body_match:
-                    func_body = func_body_match.group(1)
-                    if f"{func_name}(" in func_body or f"{func_name} " in func_body:
-                        rel_path = str(f.relative_to(self.project_root))
-                        callers.append({
-                            "name": func_def_name,
-                            "type": "func",
-                            "file": rel_path,
-                            "package": pkg
-                        })
+                func_body = self._extract_func_body(content, m.end())
+                if func_body and (f"{func_name}(" in func_body or f"{func_name} " in func_body):
+                    rel_path = str(f.relative_to(self.project_root))
+                    callers.append({
+                        "name": func_def_name,
+                        "type": "func",
+                        "file": rel_path,
+                        "package": pkg
+                    })
 
         return callers
 
+    def _find_public_callers_via_private_chain(self, private_func):
+        """通过私有函数传播链追踪到公开函数
+
+        例如: broadcastFeedSuccess(私有) → recordFeedSideEffects(私有) → applyFeed(私有) → OnGiftSend(公开)
+        使用 BFS 在同包内追踪私有调用链，直到找到公开函数。
+        """
+        pkg = private_func["package"]
+        func_name = private_func["name"]
+        file_path = private_func["file"]
+        pkg_dir = self.project_root / Path(file_path).parent
+
+        # 预加载同包所有文件内容
+        pkg_files = []
+        for f in pkg_dir.glob("*.go"):
+            if "_test.go" in f.name or ".pb.go" in f.name:
+                continue
+            content = f.read_text(encoding='utf-8', errors='ignore')
+            pkg_files.append((f, content))
+
+        # BFS: 从变更的私有函数出发，追踪私有→私有→...→公开
+        visited_private = {func_name}
+        queue = deque([func_name])
+        public_callers = []
+
+        while queue:
+            current_name = queue.popleft()
+
+            for f, content in pkg_files:
+                if current_name not in content:
+                    continue
+
+                for m in re.finditer(r'func\s+(?:\([^)]*\)\s+)?(\w+)\s*\(', content):
+                    caller_name = m.group(1)
+                    func_body = self._extract_func_body(content, m.end())
+                    if not func_body:
+                        continue
+                    if f"{current_name}(" not in func_body and f"{current_name} " not in func_body:
+                        continue
+
+                    # 调用者是公开函数 → 记录
+                    if caller_name[0].isupper():
+                        rel_path = str(f.relative_to(self.project_root))
+                        elem = {"name": caller_name, "type": "func", "file": rel_path, "package": pkg}
+                        if elem not in public_callers:
+                            public_callers.append(elem)
+                    else:
+                        # 调用者是私有函数 → 继续传播
+                        if caller_name not in visited_private:
+                            visited_private.add(caller_name)
+                            queue.append(caller_name)
+
+        return public_callers
+
     def _trace_all_elements(self):
-        """BFS 追踪所有变更元素"""
         global_visited = set()
 
-        # 先处理所有变更文件的服务归属（即使没有公开元素）
         for file_path in self.changed_files:
             service_type, service_name = self._get_service_from_file(file_path)
             if service_type == "http":
@@ -357,13 +455,11 @@ class DiffImpactAnalyzer:
                 if service_name not in self.affected_services["cmd"]:
                     self.affected_services["cmd"].append(service_name)
 
-        # 再追踪公开元素的引用传播
         for element in self.changed_elements:
             pkg_name = element.get("package", "")
             self._bfs_trace(element["name"], pkg_name, element["file"], global_visited)
 
     def _bfs_trace(self, start_element, start_pkg, start_file, global_visited):
-        """BFS 追踪（按需搜索）"""
         full_key = f"{start_pkg}.{start_element}" if start_pkg else start_element
         if full_key in global_visited:
             return
@@ -377,21 +473,18 @@ class DiffImpactAnalyzer:
             if len(path) > self.max_depth:
                 continue
 
-            # 搜索引用（带包名前缀）
             if pkg:
-                pattern = f"{pkg}\\.{current}"
+                pattern = f"{pkg}\\.{current}\\(|{pkg}\\.{current}\\b"
             else:
                 pattern = current
 
             ref_files = self._grep_pattern(pattern)
 
-            # 对于方法，还要搜索实例调用（如 rankScene.GetRank）
             if pkg and current[0].isupper():
                 instance_callers = self._find_instance_callers(pkg, current, cur_file)
                 ref_files = ref_files | instance_callers
 
             for ref_file in ref_files:
-                # 获取服务归属
                 service_type, service_name = self._get_service_from_file(ref_file)
 
                 if service_type == "http":
@@ -406,13 +499,11 @@ class DiffImpactAnalyzer:
                         self.affected_services["cmd"].append(service_name)
                     continue
 
-                # 非服务入口，继续追踪该文件的函数（只追踪公开函数）
                 if service_type in [None, "library"]:
                     info = self._parse_file_info(ref_file)
                     if info:
                         ref_pkg = info["package_name"]
                         for func_name in info["functions"]:
-                            # 只追踪公开函数（首字母大写）
                             if not func_name[0].isupper():
                                 continue
                             func_key = f"{ref_pkg}.{func_name}"
